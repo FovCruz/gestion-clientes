@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Gestión de Usuarios</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Plataforma</th>
+                    <th scope="col">Nombre de Usuario</th>
+                    <th scope="col">Clave de Usuario</th>
+                    <th scope="col">Fecha de Expiración</th>
+                    <th scope="col">Días Restantes</th>
+                    <th scope="col">Habilitado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in object_list %}
+                <tr {% if usuario.dias_restantes is not None and usuario.dias_restantes <= 3 %}class="table-danger"{% endif %}>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellido }}</td>
+                    <td>{{ usuario.plataforma }}</td>
+                    <td>{{ usuario.nombre_usuario_plataforma }}</td>
+                    <td>{{ usuario.clave_usuario_plataforma }}</td>
+                    <td>{{ usuario.fecha_expiracion }}</td>
+                    <td>{{ usuario.dias_restantes }}</td>
+                    <td>
+                        {% if usuario.habilitado %}
+                        <span class="badge bg-success">Sí</span>
+                        {% else %}
+                        <span class="badge bg-danger">No</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'usuario_update' usuario.pk %}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="{% url 'usuario_delete' usuario.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalUsuario{{ usuario.pk }}">Más</button>
+                    </td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalUsuario{{ usuario.pk }}" tabindex="-1" aria-labelledby="modalLabel{{ usuario.pk }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel{{ usuario.pk }}">Detalles del Usuario</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+                                <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+                                <p><strong>Plataforma:</strong> {{ usuario.plataforma }}</p>
+                                <p><strong>Nombre de Usuario en Plataforma:</strong> {{ usuario.nombre_usuario_plataforma }}</p>
+                                <p><strong>Clave de Usuario en Plataforma:</strong> {{ usuario.clave_usuario_plataforma }}</p>
+                                <p><strong>Fecha de Expiración:</strong> {{ usuario.fecha_expiracion }}</p>
+                                <p><strong>Días Restantes:</strong> {{ usuario.dias_restantes }}</p>
+                                <p><strong>Habilitado:</strong> {% if usuario.habilitado %}Sí{% else %}No{% endif %}</p>
+                                <p><strong>Fecha de Inicio:</strong> {{ usuario.fecha_inicio }}</p>
+                                <p><strong>Observaciones:</strong> {{ usuario.observaciones }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-end">
+        <a href="{% url 'usuario_create' %}" class="btn btn-success">Crear Usuario</a>
+    </div>
+</div>
+{% endblock %}

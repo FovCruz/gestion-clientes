@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">{{ view.title|default:"Gestionar Usuario" }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                {{ form.nombre }}
+            </div>
+            <div class="col-md-6">
+                <label for="apellido" class="form-label">Apellido</label>
+                {{ form.apellido }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="plataforma" class="form-label">Plataforma</label>
+                {{ form.plataforma }}
+            </div>
+            <div class="col-md-6">
+                <label for="habilitado" class="form-label">Habilitado</label>
+                {{ form.habilitado }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="nombre_usuario_plataforma" class="form-label">Nombre de Usuario en Plataforma</label>
+                {{ form.nombre_usuario_plataforma }}
+            </div>
+            <div class="col-md-6">
+                <label for="clave_usuario_plataforma" class="form-label">Clave de Usuario en Plataforma</label>
+                {{ form.clave_usuario_plataforma }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                {{ form.fecha_inicio }}
+            </div>
+            <div class="col-md-6">
+                <label for="meses" class="form-label">Cantidad de Meses</label>
+                {{ form.meses }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="observaciones" class="form-label">Observaciones</label>
+                {{ form.observaciones }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+        <a href="{% url 'usuario_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
