@@ -124,7 +124,7 @@ USE_TZ = True
 # Configuración para archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Ruta donde se encuentran tus archivos estáticos
+    BASE_DIR / 'gestion_usuarios/static',  # Ruta donde se encuentran tus archivos estáticos
 ]
 
 # Configuración para archivos de medios (como imágenes subidas por el usuario)
