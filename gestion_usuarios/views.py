@@ -8,6 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 #--------------
 
+class UserDashView(LoginRequiredMixin,TemplateView):
+    template_name = 'usuarios/dashboard.html'
+    success_url = reverse_lazy('dashboard')
+
 class HomeView(TemplateView):
     template_name = 'usuarios/home.html'
 
@@ -23,6 +27,9 @@ class UsuarioListView(LoginRequiredMixin, ListView):
             else:
                 usuario.dias_restantes = None  # Maneja el caso donde no hay fecha de expiración
         return queryset
+
+    success_url = reverse_lazy('usuario_list')
+
 
 class UsuarioCreateView(LoginRequiredMixin, CreateView):
     model = Usuario

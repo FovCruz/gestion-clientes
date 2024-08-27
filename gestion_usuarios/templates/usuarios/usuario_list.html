@@ -2,53 +2,73 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4 text-center">Gestión de Usuarios</h2>
-    <div class="table-responsive">
-        <table class="table table-hover table-striped align-middle">
-            <thead class="table-dark">
+    <h2 class="mb-4 text-center text-light">Gestión de Usuarios</h2>
+    <div class="table-responsive text-center">
+        <table class="table table-dark table-hover table-striped align-middle custom-table">
+            <thead class="table-secondary custom-table-header">
                 <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Plataforma</th>
-                    <th scope="col">Nombre de Usuario</th>
-                    <th scope="col">Clave de Usuario</th>
-                    <th scope="col">Fecha de Expiración</th>
-                    <th scope="col">Días Restantes</th>
-                    <th scope="col">Habilitado</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col" class="custom-table-header-cell">Nombre</th>
+                    <th scope="col" class="custom-table-header-cell">Apellido</th>
+                    <th scope="col" class="custom-table-header-cell">Plataforma</th>
+                    <th scope="col" class="custom-table-header-cell">Nombre de Usuario</th>
+                    <th scope="col" class="custom-table-header-cell">Clave de Usuario</th>
+                    <th scope="col" class="custom-table-header-cell">Fecha de Expiración</th>
+                    <th scope="col" class="custom-table-header-cell">Días Restantes</th>
+                    <th scope="col" class="custom-table-header-cell">Habilitado</th>
+                    <th scope="col" class="custom-table-header-cell">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="custom-table-body">
                 {% for usuario in object_list %}
                 <tr {% if usuario.dias_restantes is not None and usuario.dias_restantes <= 3 %}class="table-danger"{% endif %}>
-                    <td>{{ usuario.nombre }}</td>
-                    <td>{{ usuario.apellido }}</td>
-                    <td>{{ usuario.plataforma }}</td>
-                    <td>{{ usuario.nombre_usuario_plataforma }}</td>
-                    <td>{{ usuario.clave_usuario_plataforma }}</td>
-                    <td>{{ usuario.fecha_expiracion }}</td>
-                    <td>{{ usuario.dias_restantes }}</td>
-                    <td>
+                    <td class="custom-table-cell text-capitalize">{{ usuario.nombre }}</td>
+                    <td class="custom-table-cell text-capitalize">{{ usuario.apellido }}</td>
+                    <td class="custom-table-cell">{{ usuario.plataforma }}</td>
+                    <td class="custom-table-cell">{{ usuario.nombre_usuario_plataforma }}</td>
+                    <td class="custom-table-cell">{{ usuario.clave_usuario_plataforma }}</td>
+                    <td class="custom-table-cell">{{ usuario.fecha_expiracion }}</td>
+                    <td class="custom-table-cell">{{ usuario.dias_restantes }}</td>
+                    <td class="custom-table-cell">
                         {% if usuario.habilitado %}
-                        <span class="badge bg-success">Sí</span>
+                        <span class="dot bg-success"></span>
                         {% else %}
-                        <span class="badge bg-danger">No</span>
+                        <span class="dot bg-danger"></span>
                         {% endif %}
                     </td>
-                    <td>
-                        <a href="{% url 'usuario_update' usuario.pk %}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="{% url 'usuario_delete' usuario.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
-                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalUsuario{{ usuario.pk }}">Más</button>
+                    <td class="custom-table-cell">
+                        <!-- Botón Editar -->
+                        <a href="/gestion-usuarios/editar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline me-1">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+                        <a href="/gestion-usuarios/editar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+
+                        <!-- Botón Eliminar -->
+                        <a href="/gestion-usuarios/eliminar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline me-1">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="/gestion-usuarios/eliminar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none">
+                            <i class="fa fa-trash"></i>
+                        </a>
+
+                        <!-- Botón Más -->
+                        <button type="button" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalUsuario8">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none" data-bs-toggle="modal" data-bs-target="#modalUsuario8">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
                     </td>
                 </tr>
 
                 <!-- Modal -->
                 <div class="modal fade" id="modalUsuario{{ usuario.pk }}" tabindex="-1" aria-labelledby="modalLabel{{ usuario.pk }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content bg-dark text-light custom-modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalLabel{{ usuario.pk }}">Detalles del Usuario</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
@@ -63,7 +83,7 @@
                                 <p><strong>Observaciones:</strong> {{ usuario.observaciones }}</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary custom-btn" data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -72,8 +92,8 @@
             </tbody>
         </table>
     </div>
-    <div class="text-end">
-        <a href="{% url 'usuario_create' %}" class="btn btn-success">Crear Usuario</a>
+    <div class="text-end mt-3">
+        <a href="{% url 'usuario_create' %}" class="btn btn-success custom-btn_crear">Crear Usuario</a>
     </div>
 </div>
 {% endblock %}

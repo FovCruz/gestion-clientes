@@ -11,7 +11,6 @@
     <meta name="description" content="Descripción breve de tu sitio web">
     <meta name="keywords" content="palabras clave, separadas, por, comas">
     <meta name="author" content="Tu Nombre o el de tu Empresa">
-
     <!-- Título de la página -->
     <title>{% block title %}Sistema de gestión{% endblock %}</title>
 
@@ -29,24 +28,21 @@
 
     <!-- Fuente de Google Fonts (opcional) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Open Graph / Redes Sociales (opcional) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">    <!-- Open Graph / Redes Sociales (opcional) -->
     <meta property="og:title" content="Título de la Página">
     <meta property="og:description" content="Descripción de la Página">
     <meta property="og:image" content="{% static 'img/social-preview.png' %}">
     <meta property="og:url" content="https://www.tusitio.com">
     <meta name="twitter:card" content="summary_large_image">
-
-    <!-- CSS para ajustes específicos de compatibilidad o soporte -->
-    <style>
-        /* Estilos adicionales que pueden ser necesarios */
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 
 {% include 'parts/header.html' %}
 
-<body>
+<body class="bg-dark text-white">
     {% include 'parts/navbar.html' %}
     <div class="container mt-4">
         {% block content %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Gestión General (Dashboard)</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card futuristic-card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Clientes Totales</h5>
+                    <p class="card-text" id="total-clientes">1,234</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card futuristic-card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Vendido</h5>
+                    <p class="card-text" id="total-vendido">$12,345</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card futuristic-card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ganancias</h5>
+                    <p class="card-text" id="ganancias">$3,456</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card futuristic-card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Invertido</h5>
+                    <p class="card-text" id="invertido">$2,345</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card futuristic-card">
+                <div class="card-header">
+                    Clientes Cerca de Expiración
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="clientes-expiracion">Lista de clientes...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card futuristic-card">
+                <div class="card-header">
+                    Cantidad de Ventas
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="cantidad-ventas">567</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card futuristic-card">
+                <div class="card-header">
+                    Reporte General
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="reporte-general">Resumen de información...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card futuristic-card">
+                <div class="card-header">
+                    Atajos Rápidos
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled" id="atajos-rapidos">
+                        <li><a href="#" class="btn btn-link">Enlace 1</a></li>
+                        <li><a href="#" class="btn btn-link">Enlace 2</a></li>
+                        <li><a href="#" class="btn btn-link">Enlace 3</a></li>
+                        <li><a href="#" class="btn btn-link">Enlace 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
