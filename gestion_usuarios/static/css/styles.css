@@ -83,7 +83,7 @@ nav {
 }
 
 .navbar {
-    padding: 10px 0 0 0;
+    padding: 5px 0 0 0;
     border-bottom: 1px solid var(--color-secondary);
 }
 
@@ -241,11 +241,15 @@ nav {
 }
 
 .container {
-    max-width: 1340px
+    max-width: 1340px;
+    margin-top: 130px;
   }
 
 h2{
     color: #ffffff;
     font-weight: 700;
     margin-bottom: 2rem;
+}
+.content-wrapper {
+    margin-top: 56px; /* Ajusta este valor según la altura de tu navbar */
 }
