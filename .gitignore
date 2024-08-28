@@ -1,3 +1,6 @@
 *.pyc
 __pycache__/
+<<<<<<< HEAD
 media/
+=======
+>>>>>>> eb50d87050edf05cdeb4bbd2a686763becd0f15a
