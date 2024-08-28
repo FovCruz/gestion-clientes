@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f2(c86bi$ypv8k8p%6h3k5xti6529$vzq#8t_ro(99s7vpntzd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.vthome.cl', 'vthome.cl', '18.230.150.53']
 
 
 # Application definition
@@ -126,6 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'gestion_usuarios/static',  # Ruta donde se encuentran tus archivos estáticos
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Configuración para archivos de medios (como imágenes subidas por el usuario)
 MEDIA_URL = '/media/'
