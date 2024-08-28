@@ -253,3 +253,14 @@ h2{
 .content-wrapper {
     margin-top: 56px; /* Ajusta este valor según la altura de tu navbar */
 }
+
+/* static/css/styles.css */
+.carousel-item img {
+    height: 100vh;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}

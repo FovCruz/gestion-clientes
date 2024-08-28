@@ -3,6 +3,19 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from datetime import timedelta
 
+class SliderImage(models.Model):
+    image = models.ImageField(upload_to='slider_images/')
+    caption = models.CharField(max_length=255, blank=True, null=True)
+    h2_text = models.CharField(max_length=255, blank=True, null=True)
+    h4_text = models.CharField(max_length=255, blank=True, null=True)
+    paragraph = models.TextField(blank=True, null=True)
+    button_text = models.CharField(max_length=100, blank=True, null=True)
+    button_url = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.caption or 'Slider Image'
+
+
 class Usuario(AbstractUser):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)

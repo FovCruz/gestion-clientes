@@ -1,58 +1,79 @@
-{% extends 'base.html' %}
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load static %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Banner Slider -->
+    <div id="bannerCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            {% for image in slider_images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
+                {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
+                <div class="carousel-caption d-none d-md-block">
+                    {% if image.h2_text %}
+                    <h2>{{ image.h2_text }}</h2>
+                    {% endif %}
+                    {% if image.h4_text %}
+                    <h4>{{ image.h4_text }}</h4>
+                    {% endif %}
+                    {% if image.paragraph %}
+                    <p>{{ image.paragraph }}</p>
+                    {% endif %}
+                    {% if image.button_text %}
+                    <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
-{% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4 text-center">{{ view.title|default:"Gestionar Usuario" }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="nombre" class="form-label">Nombre</label>
-                {{ form.nombre }}
+    <!-- Section with Products -->
+    <section class="container my-5">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{% static 'img/'|add:product.image %}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>${{ product.price }}</strong></p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="apellido" class="form-label">Apellido</label>
-                {{ form.apellido }}
-            </div>
+            {% endfor %}
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="plataforma" class="form-label">Plataforma</label>
-                {{ form.plataforma }}
-            </div>
-            <div class="col-md-6">
-                <label for="habilitado" class="form-label">Habilitado</label>
-                {{ form.habilitado }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="nombre_usuario_plataforma" class="form-label">Nombre de Usuario en Plataforma</label>
-                {{ form.nombre_usuario_plataforma }}
-            </div>
-            <div class="col-md-6">
-                <label for="clave_usuario_plataforma" class="form-label">Clave de Usuario en Plataforma</label>
-                {{ form.clave_usuario_plataforma }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                {{ form.fecha_inicio }}
-            </div>
-            <div class="col-md-6">
-                <label for="meses" class="form-label">Cantidad de Meses</label>
-                {{ form.meses }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="observaciones" class="form-label">Observaciones</label>
-                {{ form.observaciones }}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success mt-3">Guardar</button>
-        <a href="{% url 'usuario_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
-    </form>
-</div>
-{% endblock %}
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carousel = document.querySelector('#bannerCarousel');
+            if (carousel.querySelectorAll('.carousel-item').length > 1) {
+                const carouselInstance = new bootstrap.Carousel(carousel, {
+                    interval: 3000
+                });
+            }
+        });
+    </script>
+</body>
+</html>
