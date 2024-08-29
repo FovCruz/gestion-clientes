@@ -1,79 +1,56 @@
-<!-- templates/home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    {% load static %}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-</head>
-<body>
-    <!-- Banner Slider -->
-    <div id="bannerCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            {% for image in slider_images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
-                {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
-                <div class="carousel-caption d-none d-md-block">
-                    {% if image.h2_text %}
-                    <h2>{{ image.h2_text }}</h2>
-                    {% endif %}
-                    {% if image.h4_text %}
-                    <h4>{{ image.h4_text }}</h4>
-                    {% endif %}
-                    {% if image.paragraph %}
-                    <p>{{ image.paragraph }}</p>
-                    {% endif %}
-                    {% if image.button_text %}
-                    <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
-                    {% endif %}
-                </div>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Banner Slider -->
+<div id="bannerCarousel" class="carousel slide">
+    <div class="carousel-inner">
+        {% for image in slider_images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
+            {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
+            <div class="carousel-caption d-none d-md-block">
+                {% if image.h2_text %}
+                <h2>{{ image.h2_text }}</h2>
+                {% endif %}
+                {% if image.h4_text %}
+                <h4>{{ image.h4_text }}</h4>
+                {% endif %}
+                {% if image.paragraph %}
+                <p>{{ image.paragraph }}</p>
+                {% endif %}
+                {% if image.button_text %}
+                <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
                 {% endif %}
             </div>
-            {% endfor %}
+            {% endif %}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        {% endfor %}
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
-    <!-- Section with Products -->
-    <section class="container my-5">
-        <div class="row">
-            {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="{% static 'img/'|add:product.image %}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="card-text"><strong>${{ product.price }}</strong></p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+<!-- Enlaces a los archivos JavaScript de Bootstrap y Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carouselElement = document.querySelector('#bannerCarousel');
+        if (carouselElement) {
+            const carousel = new bootstrap.Carousel(carouselElement, {
+                interval: 3000, // Cambia el intervalo de transición (en milisegundos)
+                ride: 'carousel' // Asegura que el carousel empiece a rotar automáticamente
+            });
+        }
+    });
+</script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const carousel = document.querySelector('#bannerCarousel');
-            if (carousel.querySelectorAll('.carousel-item').length > 1) {
-                const carouselInstance = new bootstrap.Carousel(carousel, {
-                    interval: 3000
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+{% endblock %}

@@ -1,12 +1,18 @@
 from django.urls import reverse_lazy
+from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Usuario
+from .models import Usuario,SliderImage
 from .forms import UsuarioForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 #--------------
+def banner_view(request):
+    slider_images = SliderImage.objects.all()
+    return render(request, 'usuarios/home.html', {'slider_images': slider_images})
+
+
 
 class UserDashView(LoginRequiredMixin,TemplateView):
     template_name = 'usuarios/dashboard.html'

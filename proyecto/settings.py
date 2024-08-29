@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Ruta base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f2(c86bi$ypv8k8p%6h3k5xti6529$vzq#8t_ro(99s7vpntzd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.vthome.cl', 'vthome.cl', '18.230.150.53']
+ALLOWED_HOSTS = ['www.vthome.cl', 'vthome.cl', '18.230.150.53' ,'127.0.0.1', '127.0.0.1:8000','localhost', 'localhost:8000']
 
 
 # Application definition
@@ -130,7 +130,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Configuración para archivos de medios (como imágenes subidas por el usuario)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

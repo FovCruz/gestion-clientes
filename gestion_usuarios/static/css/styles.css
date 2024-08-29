@@ -1,46 +1,44 @@
+/* ==VARIABLES==================================== */
 :root {
     --color-primary: #6c757d;
-    /* Gris oscuro */
     --color-secondary: #adb5bd;
-    /* Gris más claro */
     --color-success: #28a745;
-    /* Verde */
     --color-danger: #dc3545;
-    /* Rojo */
     --color-warning: #ffc107;
-    /* Amarillo */
     --color-dark: #343a40;
-    /* Gris muy oscuro */
     --color-light: #f8f9fa;
-    /* Gris muy claro */
     --color-negro: #000000;
-    /* negro */
+    --color-navbar: rgb(77, 47, 245);
     --background-color: var(--bs-table-bg);
 }
 
+/* ==GENERAL==================================== */
 body,
 html {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-}
-
-body,
-html,
-nav {
     font-family: "Nunito Sans", sans-serif !important;
 }
 
-/* Hero Section */
+/* ==HERO SECTION==================================== */
 .hero-section {
-    margin-top: 56px;
-    /* Para compensar el espacio del navbar fijo */
-    height: calc(100vh - 56px);
-    /* Ajusta la altura de la sección para que ocupe toda la pantalla menos el navbar */
+    margin-top: 56px; /* Ajusta el espacio del navbar fijo */
+    height: calc(100vh - 56px); /* Altura de la sección menos el navbar */
 }
 
-/* Carousel captions styling */
+/* ==CAROUSEL==================================== */
+.carousel-item img {
+    height: 100vh;
+    max-height: 600px;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
 .carousel-caption h5 {
     font-size: 2rem;
     font-weight: bold;
@@ -50,7 +48,7 @@ nav {
     font-size: 1.2rem;
 }
 
-/* Products Section */
+/* ==PRODUCTS SECTION==================================== */
 .card {
     transition: transform 0.2s;
 }
@@ -59,7 +57,7 @@ nav {
     transform: scale(1.05);
 }
 
-/* Sección de Imagen y Texto */
+/* ==CTA BUTTON==================================== */
 .cta-button {
     background-color: var(--color-primary);
     border: none;
@@ -73,18 +71,19 @@ nav {
     background-color: var(--color-secondary);
 }
 
+/* ==ROUNDED==================================== */
 .rounded {
     border-radius: 15px;
-    /* Bordes redondeados para la imagen */
 }
 
 .text-center {
     text-align: center;
 }
 
+/* ==NAVBAR==================================== */
 .navbar {
-    padding: 5px 0 0 0;
     border-bottom: 1px solid var(--color-secondary);
+    background: linear-gradient(90deg, #8a26e1 2%, #e32e9f 36%, #e32e9f 67%, #fe3e31 98%);
 }
 
 .navbar-brand img {
@@ -92,7 +91,15 @@ nav {
     width: 100%;
     max-width: 90px;
 }
+.nav-item a{
+    color: var(--color-light);
+}
+.nav-item a:hover{
+    color: var(--color-secondary);
+}
 
+
+/* ==NAVBAR BUTTONS==================================== */
 .btn-logout {
     color: white;
     background-color: var(--color-danger) !important;
@@ -106,8 +113,8 @@ nav {
 }
 
 .btn-buscar {
-    color: white;
-    border: 1.5px solid var(--color-primary) !important;
+    color: var(--color-light);
+    border: 1.5px solid var(--color-light) !important;
 }
 
 .btn-buscar:hover {
@@ -118,17 +125,17 @@ nav {
 
 .btn-login {
     color: white;
-    border: 1px solid var(--color-primary) !important;
-    background-color: var(--color-primary);
+    border: 1px solid var(--color-light) !important;
+    background-color: var(--color-success);
 }
 
 .btn-login:hover {
     border: 1px solid var(--color-primary) !important;
-    background-color: var(--color-dark);
-    border: 1px solid var(--color-danger) !important;
+    background-color: black;
+    border: 1px solid var(--color-light) !important;
 }
 
-/* Tabla de Usuarios */
+/* ==TABLE==================================== */
 .custom-table-header-cell {
     text-align: center;
 }
@@ -141,53 +148,12 @@ nav {
     background-color: var(--color-secondary);
 }
 
-/* .custom-table {
-    border-collapse: separate;
-    border-spacing: 0 0.5rem;
-} */
-
 .custom-table-cell {
     vertical-align: middle;
     text-align: center;
 }
 
-.custom-btn {
-    /* width: 100%; */
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-}
-
-.btn-outline-secondary {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-    padding: 3px;
-}
-
-.btn-outline-secondary:hover {
-    color: #ffffff;
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-.dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.bg-success {
-    background-color: var(--color-success) !important;
-}
-
-.bg-danger {
-    background-color: var(--color-danger) !important;
-}
-
-/* Modal */
+/* ==MODAL==================================== */
 .custom-modal-content {
     background-color: var(--color-dark);
 }
@@ -197,7 +163,7 @@ nav {
     --bs-table-hover-bg: #7b000caa;
 }
 
-
+/* ==FUTURISTIC CARD==================================== */
 .futuristic-card {
     background: linear-gradient(135deg, #2b2b2b, #1f1f1f);
     border: none;
@@ -240,27 +206,26 @@ nav {
     text-decoration: underline;
 }
 
+/* ==CONTAINER==================================== */
 .container {
     max-width: 1340px;
     margin-top: 130px;
-  }
+}
 
-h2{
+/* ==HEADING==================================== */
+h2 {
     color: #ffffff;
     font-weight: 700;
     margin-bottom: 2rem;
 }
+
+/* ==CONTENT WRAPPER==================================== */
 .content-wrapper {
     margin-top: 56px; /* Ajusta este valor según la altura de tu navbar */
 }
 
-/* static/css/styles.css */
-.carousel-item img {
-    height: 100vh;
-    object-fit: cover;
-}
 
-.carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+/* ==UTILITY CLASSES==================================== */
+.d-flex {
+    display: flex;
 }
