@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f2(c86bi$ypv8k8p%6h3k5xti6529$vzq#8t_ro(99s7vpntzd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.vthome.cl', 'vthome.cl', '15-228-18-126' ,'127.0.0.1', '127.0.0.1:8000','localhost', 'localhost:8000']
+ALLOWED_HOSTS = ['www.vthome.cl', 'vthome.cl', '15.228.18.126' ,'127.0.0.1', '127.0.0.1:8000','localhost', 'localhost:8000']
 
 
 # Application definition
