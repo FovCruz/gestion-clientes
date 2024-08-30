@@ -8,15 +8,20 @@ class UsuarioForm(forms.ModelForm):
     fecha_inicio = forms.DateField(
         widget=forms.TextInput(attrs={
             'type': 'date',
-            'class': 'form-control',
+            'class': 'form-control form-control-sm',
+            'placeholder': 'Seleccione la fecha de inicio',
             'onfocus': "(this.type='date')",
         }),
         initial=timezone.now().date()
     )
     
-    meses = forms.ChoiceField(choices=[
-        (1, '1 mes'), (2, '2 meses'), (3, '3 meses'), (4, '4 meses'), (6, '6 meses'), (12, '12 meses')
-    ], required=True, widget=forms.Select(attrs={'class': 'form-select'}))
+    meses = forms.ChoiceField(
+        choices=[
+            (1, '1 mes'), (2, '2 meses'), (3, '3 meses'), (4, '4 meses'), (6, '6 meses'), (12, '12 meses')
+        ],
+        required=True,
+        widget=forms.Select(attrs={'class': 'form-select form-select-sm'})
+    )
 
     class Meta:
         model = Usuario
@@ -32,12 +37,12 @@ class UsuarioForm(forms.ModelForm):
             'habilitado'
         ]
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
-            'plataforma': forms.Select(attrs={'class': 'form-select'}),
-            'nombre_usuario_plataforma': forms.TextInput(attrs={'class': 'form-control'}),
-            'clave_usuario_plataforma': forms.TextInput(attrs={'class': 'form-control'}),
-            'observaciones': forms.Textarea(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese el nombre'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese el apellido'}),
+            'plataforma': forms.Select(attrs={'class': 'form-select form-select-sm'}),
+            'nombre_usuario_plataforma': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese el nombre de usuario'}),
+            'clave_usuario_plataforma': forms.PasswordInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese la clave de usuario'}),
+            'observaciones': forms.Textarea(attrs={'class': 'form-control form-control-sm bg-light', 'placeholder': 'Ingrese observaciones','rows':3}),
             'habilitado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

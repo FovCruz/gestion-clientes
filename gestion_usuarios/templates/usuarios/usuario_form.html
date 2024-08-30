@@ -1,58 +1,66 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4 text-center">{{ view.title|default:"Gestionar Usuario" }}</h2>
+<div class="titulo-pagina">
+    <h2>Gestión de Usuarios</h2>
+    <p>Crear usuario dentro de la plataforma</p>
+</div>
+<div class="container">
     <form method="post">
         {% csrf_token %}
+
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label small">Nombre</label>
                 {{ form.nombre }}
+                <small class="form-text text-muted">Ingrese el nombre completo.</small>
             </div>
             <div class="col-md-6">
-                <label for="apellido" class="form-label">Apellido</label>
+                <label for="apellido" class="form-label small">Apellido</label>
                 {{ form.apellido }}
+                <small class="form-text text-muted">Ingrese el apellido.</small>
             </div>
         </div>
+
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="plataforma" class="form-label">Plataforma</label>
+                <label for="plataforma" class="form-label small">Plataforma</label>
                 {{ form.plataforma }}
             </div>
             <div class="col-md-6">
-                <label for="habilitado" class="form-label">Habilitado</label>
+                <label for="habilitado" class="form-label small">Habilitado</label>
                 {{ form.habilitado }}
-            </div>
+            </div>            
         </div>
+        
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="nombre_usuario_plataforma" class="form-label">Nombre de Usuario en Plataforma</label>
+                <label for="nombre_usuario_plataforma" class="form-label small">Nombre de Usuario en Plataforma</label>
                 {{ form.nombre_usuario_plataforma }}
             </div>
             <div class="col-md-6">
-                <label for="clave_usuario_plataforma" class="form-label">Clave de Usuario en Plataforma</label>
+                <label for="clave_usuario_plataforma" class="form-label small">Clave de Usuario en Plataforma</label>
                 {{ form.clave_usuario_plataforma }}
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                <label for="fecha_inicio" class="form-label small">Fecha de Inicio</label>
                 {{ form.fecha_inicio }}
             </div>
             <div class="col-md-6">
-                <label for="meses" class="form-label">Cantidad de Meses</label>
+                <label for="meses" class="form-label small">Cantidad de Meses</label>
                 {{ form.meses }}
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="observaciones" class="form-label">Observaciones</label>
+            <div class="col-12">
+                <label for="observaciones" class="form-label small">Observaciones</label>
                 {{ form.observaciones }}
             </div>
         </div>
-        <button type="submit" class="btn btn-success mt-3">Guardar</button>
-        <a href="{% url 'usuario_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
+        <button type="submit" class="btn btn-success btn-sm mt-3">Guardar</button>
+        <a href="{% url 'usuario_list' %}" class="btn btn-secondary btn-sm mt-3">Cancelar</a>
     </form>
 </div>
 {% endblock %}

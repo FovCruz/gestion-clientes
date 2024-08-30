@@ -2,11 +2,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from django.views.static import serve
-from .views import banner_view,HomeView, UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView
+from .views import HomeView, UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView
 
 
 urlpatterns = [
-    path('', banner_view, name='home'),
+    #path('', banner_view, name='home'),
+    path('', HomeView.as_view(), name='home'),
     path('dashboard/', UserDashView.as_view(), name='dashboard'),
     path('usuarios/', UsuarioListView.as_view(), name='usuario_list'),
     path('usuarios/crear/', UsuarioCreateView.as_view(), name='usuario_create'),

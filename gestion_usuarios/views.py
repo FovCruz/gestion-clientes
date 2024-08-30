@@ -8,11 +8,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 #--------------
-def banner_view(request):
-    slider_images = SliderImage.objects.all()
-    return render(request, 'usuarios/home.html', {'slider_images': slider_images})
-
-
+# def banner_view(request):
+#     slider_images = SliderImage.objects.all()
+#     return render(request, 'usuarios/home.html', {'slider_images': slider_images})
 
 class UserDashView(LoginRequiredMixin,TemplateView):
     template_name = 'usuarios/dashboard.html'
@@ -20,6 +18,11 @@ class UserDashView(LoginRequiredMixin,TemplateView):
 
 class HomeView(TemplateView):
     template_name = 'usuarios/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['slider_images'] = SliderImage.objects.all()
+        return context
 
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = Usuario
@@ -57,11 +60,3 @@ class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
 class CustomLoginView(LoginView):
     template_name = 'usuarios/login.html'
     redirect_authenticated_user = True
-
-    def get_success_url(self):
-        return self.get_redirect_url() or self.success_url or reverse_lazy('home')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Iniciar Sesión'
-        return context

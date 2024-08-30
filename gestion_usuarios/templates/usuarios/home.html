@@ -2,55 +2,8 @@
 {% load static %}
 
 {% block content %}
+  <!-- Inicio banner Slider -->
+  {% include 'parts/slider.html'%}
 
-<!-- Banner Slider -->
-<div id="bannerCarousel" class="carousel slide">
-    <div class="carousel-inner">
-        {% for image in slider_images %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
-            {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
-            <div class="carousel-caption d-none d-md-block">
-                {% if image.h2_text %}
-                <h2>{{ image.h2_text }}</h2>
-                {% endif %}
-                {% if image.h4_text %}
-                <h4>{{ image.h4_text }}</h4>
-                {% endif %}
-                {% if image.paragraph %}
-                <p>{{ image.paragraph }}</p>
-                {% endif %}
-                {% if image.button_text %}
-                <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
-                {% endif %}
-            </div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<!-- Enlaces a los archivos JavaScript de Bootstrap y Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const carouselElement = document.querySelector('#bannerCarousel');
-        if (carouselElement) {
-            const carousel = new bootstrap.Carousel(carouselElement, {
-                interval: 3000, // Cambia el intervalo de transición (en milisegundos)
-                ride: 'carousel' // Asegura que el carousel empiece a rotar automáticamente
-            });
-        }
-    });
-</script>
 
 {% endblock %}

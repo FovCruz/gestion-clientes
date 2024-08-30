@@ -2,18 +2,40 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from datetime import timedelta
+from django.conf import settings
+from django.core.exceptions import ValidationError
+import os
+
+from django.db import models
+import os
 
 class SliderImage(models.Model):
-    image = models.ImageField(upload_to='slider_images/')
-    caption = models.CharField(max_length=255, blank=True, null=True)
-    h2_text = models.CharField(max_length=255, blank=True, null=True)
-    h4_text = models.CharField(max_length=255, blank=True, null=True)
-    paragraph = models.TextField(blank=True, null=True)
-    button_text = models.CharField(max_length=100, blank=True, null=True)
-    button_url = models.URLField(blank=True, null=True)
+    image = models.ImageField(upload_to='slider_images/', verbose_name='Imagen')
+    caption = models.CharField(max_length=255, blank=True, null=True, verbose_name='Subtítulo')
+    h2_text = models.CharField(max_length=255, blank=True, null=True, verbose_name='Texto H2')
+    h4_text = models.CharField(max_length=255, blank=True, null=True, verbose_name='Texto H4')
+    paragraph = models.TextField(blank=True, null=True, verbose_name='Párrafo')
+    button_text = models.CharField(max_length=255, blank=True, null=True, verbose_name='Texto del Botón')
+    button_url = models.URLField(blank=True, null=True, verbose_name='URL del Botón')
+
+    def clean(self):
+        if not self.image:
+            raise ValidationError('Debe haber al menos una imagen.')
+
+    def delete(self, *args, **kwargs):
+        # Elimina el archivo de imagen si existe
+        if self.image:
+            if os.path.isfile(self.image.path):
+                os.remove(self.image.path)
+        super().delete(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Imagen de Slider'
+        verbose_name_plural = 'Imágenes de Slider'
 
     def __str__(self):
         return self.caption or 'Slider Image'
+
 
 
 class Usuario(AbstractUser):
