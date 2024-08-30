@@ -1,54 +1,24 @@
-<!-- Banner Slider -->
-<div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        {% for image in slider_images %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
-            {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
-            <div class="carousel-caption d-none d-md-block">
-                {% if image.h2_text %}
-                <h2>{{ image.h2_text }}</h2>
-                {% endif %}
-                {% if image.h4_text %}
-                <h4>{{ image.h4_text }}</h4>
-                {% endif %}
-                {% if image.paragraph %}
-                <p>{{ image.paragraph }}</p>
-                {% endif %}
-                {% if image.button_text %}
-                <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
-                {% endif %}
-            </div>
+{% load static %}
+<div class="banner-slider">
+    {% for image in slider_images %}
+    <div class="banner-slide">
+        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.caption }}">
+        {% if image.h2_text or image.h4_text or image.paragraph or image.button_text %}
+        <div class="banner-caption">
+            {% if image.h2_text %}
+            <h2>{{ image.h2_text }}</h2>
+            {% endif %}
+            {% if image.h4_text %}
+            <h4>{{ image.h4_text }}</h4>
+            {% endif %}
+            {% if image.paragraph %}
+            <p>{{ image.paragraph }}</p>
+            {% endif %}
+            {% if image.button_text %}
+            <a href="{{ image.button_url }}" class="btn btn-primary">{{ image.button_text }}</a>
             {% endif %}
         </div>
-        {% endfor %}
+        {% endif %}
     </div>
-    {% if slider_images|length > 1 %}
-    <button class="carousel-control-prev bg-dark" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next bg-dark" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-    {% endif %}
+    {% endfor %}
 </div>
-
-<!-- Enlaces a los archivos JavaScript de Bootstrap y Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const carouselElement = document.querySelector('#bannerCarousel');
-        if (carouselElement) {
-            new bootstrap.Carousel(carouselElement, {
-                interval: 5000, // Intervalo de 5 segundos
-                ride: 'carousel', // Empieza a rotar automáticamente
-                pause: 'hover', // Pausa el carousel al pasar el mouse sobre él
-                wrap: true, // Volver al primer slide después de llegar al final
-                keyboard: true // Permite el control del carousel con el teclado
-            });
-        }
-    });
-</script>

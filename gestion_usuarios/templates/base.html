@@ -11,45 +11,59 @@
     <meta name="description" content="Descripción breve de tu sitio web">
     <meta name="keywords" content="palabras clave, separadas, por, comas">
     <meta name="author" content="Tu Nombre o el de tu Empresa">
+    
     <!-- Título de la página -->
     <title>{% block title %}Sistema de gestión{% endblock %}</title>
+    
     <!-- Favicon -->
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    
     <!-- CSS de Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Íconos de Bootstrap (opcional) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- CSS adicional (personalizado) -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <!-- Tailwind CSS -->
+    
+    <!-- Tailwind CSS (comentado) -->
     <!-- <link href="{% static 'css/output.css' %}" rel="stylesheet"> -->
-    <!-- Fuente de Google Fonts (opcional) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Fuente de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <!-- Open Graph / Redes Sociales (opcional) -->
-    <meta property="og:title" content="Título de la Página">
-    <meta property="og:description" content="Descripción de la Página">
-    <meta property="og:image" content="{% static 'img/social-preview.png' %}">
-    <meta property="og:url" content="https://www.tusitio.com">
-    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Slick Slider CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    
+    <!-- CSS adicional (personalizado) -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
-<body class="bg-dark text-white text-capitalize">
+<body class="bg-dark text-white">
     {% include 'parts/header.html' %}
-    {% include 'parts/navbar.html' %}
 
-    <div>
-        {% block content %}
-        {% endblock %}
-        <!-- Enlaces a los archivos JavaScript de Bootstrap y Popper.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.7/umd/popper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <div class="text-capitalize">
+        {% include 'parts/navbar.html' %}
+        {% block content %}{% endblock %}
     </div>
 
     {% include 'parts/footer.html' %}
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Slick Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    
+    <!-- Scripts adicionales -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

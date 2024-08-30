@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from django.views.static import serve
-from .views import HomeView, UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView
+from .views import HomeView, ProductosView,UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView
 
 
 urlpatterns = [
@@ -14,8 +14,8 @@ urlpatterns = [
     path('usuarios/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_update'),
     path('usuarios/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_delete'),
     path('login/', CustomLoginView.as_view(), name='login'),
-    # Otros patrones de URL
-]
+    path('productos/', ProductosView.as_view(), name='productos'),
+    ]
 
 
 if settings.DEBUG:

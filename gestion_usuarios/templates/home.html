@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- Slider del banner principal -->
+  {% include 'parts/slider.html'%}
+  <!-- Carrusel de logos -->
+  {% include 'productos.html' %}
+
+  {% include 'parts/carrusel_logos.html' %}
+
+{% endblock %}

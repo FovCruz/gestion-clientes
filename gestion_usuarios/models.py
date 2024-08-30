@@ -6,9 +6,31 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import os
 
-from django.db import models
-import os
 
+#SECCION DE PRODUCTOS
+class Producto(models.Model):
+    nombre = models.CharField(max_length=255)
+    descripcion = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    imagen = models.ImageField(upload_to='productos/')
+    disponible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nombre
+
+
+#CARRUSEL DE LOGOS 
+class Logo(models.Model):
+    imagen = models.ImageField(upload_to='logos/')
+    
+    def __str__(self):
+        return f"Logo {self.id}"
+    
+    class Meta:
+        verbose_name = "Logo"
+        verbose_name_plural = "Carrusel de logos"
+
+#BANNER SLIDER DEL HOME
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images/', verbose_name='Imagen')
     caption = models.CharField(max_length=255, blank=True, null=True, verbose_name='Subtítulo')
@@ -20,7 +42,7 @@ class SliderImage(models.Model):
 
     def clean(self):
         if not self.image:
-            raise ValidationError('Debe haber al menos una imagen.')
+            raise ValidationError('Debe haber al menos una imagen para mostrar en el banner.')
 
     def delete(self, *args, **kwargs):
         # Elimina el archivo de imagen si existe
@@ -37,7 +59,7 @@ class SliderImage(models.Model):
         return self.caption or 'Slider Image'
 
 
-
+#formulario para la creacion de usuarios
 class Usuario(AbstractUser):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)

@@ -2,26 +2,28 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Usuario,SliderImage
+from .models import Usuario,SliderImage,Logo,Producto
 from .forms import UsuarioForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-#--------------
-# def banner_view(request):
-#     slider_images = SliderImage.objects.all()
-#     return render(request, 'usuarios/home.html', {'slider_images': slider_images})
+#--------------  
+class ProductosView(LoginRequiredMixin,TemplateView):
+    template_name = 'productos.html'
+    success_url = reverse_lazy('productos')
 
 class UserDashView(LoginRequiredMixin,TemplateView):
     template_name = 'usuarios/dashboard.html'
     success_url = reverse_lazy('dashboard')
 
 class HomeView(TemplateView):
-    template_name = 'usuarios/home.html'
+    template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['slider_images'] = SliderImage.objects.all()
+        context['logo_images'] = Logo.objects.all()
+        context['productos'] = Producto.objects.all()  # Agrega productos al contexto
         return context
 
 class UsuarioListView(LoginRequiredMixin, ListView):

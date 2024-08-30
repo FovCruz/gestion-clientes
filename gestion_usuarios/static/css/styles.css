@@ -28,29 +28,6 @@ html {
     height: calc(100vh - 56px); /* Altura de la sección menos el navbar */
 }
 
-#bannerCarousel {
-    position: relative;
-    width: 100%;
-    height: 500px; /* Ajusta el alto según tus necesidades */
-    overflow: hidden; /* Asegura que las imágenes no desborden el contenedor */
-    margin: 80px 0 0 0;
-}
-
-.carousel-inner {
-    height: 100%;
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor sin deformarla */
-}
-
-.carousel-caption{
-    top: 30%;
-}
-
-
 /* ==PRODUCTS SECTION==================================== */
 .card {
     transition: transform 0.2s;
@@ -230,5 +207,104 @@ html {
     margin-top: 56px; /* Ajusta este valor según la altura de tu navbar */
 }
 
+/* Slider de logos */
+.logo-carrusel {
+    margin: 1rem auto;
+    width: 80%;
+}
+.slick-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.slick-slide-content img {
+    width: auto;
+    height: auto;
+    max-width: 80%;
+    max-height: 100%;
+    filter: grayscale(100%);
+    transition: filter 0.2s ease;
+    border-radius: 10px;
+}
+.slick-slide-content img:hover {
+    filter: grayscale(0%);
+}
 
 
+/* BANNER SLIDER HOME */
+.banner-slider {
+    position: relative;
+    overflow: hidden;
+    height: 432px;
+    top: 79px;
+}
+
+.banner-slide {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el contenedor */
+    object-position: center;
+}
+
+.banner-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-sizing: border-box; /* Incluye el padding en el tamaño total */
+    z-index: 10;
+}
+
+.banner-caption h2,
+.banner-caption h4,
+.banner-caption p {
+    margin: 0;
+}
+
+.banner-caption a.btn {
+    margin-top: 10px;
+}
+
+/* Estilos para las flechas de navegación */
+.slick-prev, .slick-next {
+    background-color: #333333a1; /* Fondo oscuro */
+    color:white; /* Color de las flechas */
+    width: 120px; /* Tamaño de las flechas */
+    height: 100%; /* Tamaño de las flechas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* Asegura que las flechas estén por encima del contenido */
+    margin: 0;
+}
+
+.slick-prev:before, .slick-next:before {
+    font-size: 50px; /* Tamaño del icono de la flecha */
+    color: white; /* Color de la flecha */
+}
+.slick-prev:hover, .slick-next:hover {
+    background-color: #333333ce; /* Fondo oscuro */
+
+}
+
+.slick-prev {
+    left: 1px; /* Posición horizontal desde la izquierda */
+}
+
+.slick-next {
+    right: 1px; /* Posición horizontal desde la derecha */
+}

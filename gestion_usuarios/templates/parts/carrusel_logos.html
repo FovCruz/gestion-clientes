@@ -1,0 +1,8 @@
+{% load static %}
+<div class="logo-carrusel">
+    {% for logo in logo_images %}
+    <div class="slick-slide-content">
+        <img src="{{ logo.imagen.url }}" alt="Logo">
+    </div>
+    {% endfor %}
+</div>

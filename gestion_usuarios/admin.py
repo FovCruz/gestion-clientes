@@ -1,14 +1,32 @@
 from django.contrib import admin
-from .models import Usuario,SliderImage
+from .models import Usuario,SliderImage,Logo,Producto
 
+#=======================================================
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'precio', 'disponible')
+    search_fields = ('nombre',)
+    list_filter = ('disponible',)
+
+
+#carga de modelo con sus atributos a mostrar en el panel
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('username', 'nombre', 'apellido', 'email', 'is_active', 'is_staff')
     search_fields = ('username', 'email', 'nombre', 'apellido')
     list_filter = ('is_active', 'is_staff')
 
+#carga de modelo con sus atributos a mostrar en el panel
 
 @admin.register(SliderImage)
 class SliderImageAdmin(admin.ModelAdmin):
     list_display = ('caption', 'image', 'h2_text', 'h4_text', 'button_text')
     fields = ('image', 'caption', 'h2_text', 'h4_text', 'paragraph', 'button_text', 'button_url')
+
+#carga de modelo con sus atributos a mostrar en el panel
+class LogoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'imagen')
+    search_fields = ('id',)
+
+admin.site.register(Logo, LogoAdmin)

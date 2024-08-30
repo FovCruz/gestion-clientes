@@ -1,0 +1,137 @@
+{% load static %}
+
+
+<div class="titulo-pagina">
+    <h2>Sección de productos</h2>
+    <p>Sección para la muestra de productos principales de la tienda</p>
+  </div>
+
+  <section class="cards">
+    <div class="container">
+      <div class="contenedorCards">
+        {% for producto in productos %}
+          <div class="card">
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            <div class="card-body">
+              <h3>{{ producto.nombre }}</h3>
+              <p class="descripcion-corta">{{ producto.descripcionCorta }}</p>
+              <p class="descripcion-larga">{{ producto.descripcionLarga }}</p>
+              <p class="price">
+                {% if producto.precioOferta %}
+                  <span class="precio-original">${{ producto.precio }}</span>
+                  <span class="precio-oferta">${{ producto.precioOferta }}</span>
+                {% else %}
+                  ${{ producto.precio }}
+                {% endif %}
+              </p>
+              {% if producto.existencia %}
+                <button class="btn">Añadir al carrito</button>
+              {% else %}
+                <p class="no-disponible">No disponible</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  
+  <style>
+
+/* Estilos CSS para la sección de productos */
+.cards {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contenedorCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: calc(25% - 20px); /* Ajusta el porcentaje según el número de columnas deseado */
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02); /* Efecto de hover */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-body h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.descripcion-corta {
+  font-size: 14px;
+  color: #666;
+}
+
+.descripcion-larga {
+  font-size: 12px;
+  color: #999;
+  margin: 10px 0;
+  height: 60px; /* Ajusta la altura según sea necesario */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.price {
+  font-size: 16px;
+  color: #47d3e6;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 10px;
+}
+
+.precio-oferta {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.btn {
+  background-color: #47d3e6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.no-disponible {
+  color: #888;
+  font-size: 14px;
+}
+
+
+  </style>
+
