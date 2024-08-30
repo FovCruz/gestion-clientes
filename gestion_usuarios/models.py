@@ -10,14 +10,16 @@ import os
 #SECCION DE PRODUCTOS
 class Producto(models.Model):
     nombre = models.CharField(max_length=255)
-    descripcion = models.TextField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
     imagen = models.ImageField(upload_to='productos/')
-    disponible = models.BooleanField(default=True)
+    descripcionCorta = models.CharField(max_length=255, default='Descripción corta no disponible')
+    descripcionLarga = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precioOferta = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    existencia = models.BooleanField(default=True)
+    codigoProducto = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.nombre
-
 
 #CARRUSEL DE LOGOS 
 class Logo(models.Model):

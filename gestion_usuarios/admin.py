@@ -5,9 +5,9 @@ from .models import Usuario,SliderImage,Logo,Producto
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'precio', 'disponible')
+    list_display = ('nombre', 'precio', 'existencia')
     search_fields = ('nombre',)
-    list_filter = ('disponible',)
+    list_filter = ('existencia',)
 
 
 #carga de modelo con sus atributos a mostrar en el panel

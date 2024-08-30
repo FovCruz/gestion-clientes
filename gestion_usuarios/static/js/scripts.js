@@ -35,8 +35,31 @@ $(document).ready(function () {
         autoplay: true,
         autoplaySpeed: 2000,
         arrows: true,
-        dots: false,
+        dots: true,
         pauseOnHover: false,
-        adaptiveHeight: true
+        adaptiveHeight: true,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false, // Ocultar los botones en dispositivos móviles
+                    dots: true
+                }
+            }
+        ]
     });
 });
+
+// FORMATEAR VALORES
+document.addEventListener("DOMContentLoaded", function() {
+    function formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    document.querySelectorAll('.price').forEach(function(priceElement) {
+        let priceText = priceElement.textContent.trim().replace("CLP ", "").replace(",", "");
+        let formattedPrice = formatPrice(parseFloat(priceText));
+        priceElement.textContent = `Precio $ ${formattedPrice}`;
+    });
+});
+

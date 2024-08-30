@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion_usuarios',
     'crispy_forms',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -146,5 +147,5 @@ LOGIN_URL = 'login'
 # Redirección después de cerrar sesión
 LOGOUT_REDIRECT_URL = 'login'
 
-
-#LOGIN_REDIRECT_URL = '/dashboard/'  # o la ruta que desees para el dashboard
+#configura el peso chileno,formatear números, incluyendo la separación de miles.
+USE_L10N = True

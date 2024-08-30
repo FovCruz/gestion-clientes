@@ -22,3 +22,49 @@
     </div>
     {% endfor %}
 </div>
+
+
+<style>
+    .banner-slider {
+        width: 100%; /* Ajusta el ancho del slider al 100% del contenedor */
+        position: relative;
+    }
+
+    .banner-slide {
+        position: relative;
+    }
+
+    .banner-slide img {
+        width: 100%; /* Ajusta la imagen al ancho del slider */
+        height: auto; /* Mantiene la proporción de la imagen */
+    }
+
+    .banner-caption {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para el texto */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .banner-caption h2, .banner-caption h4, .banner-caption p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .banner-caption .btn {
+        margin-top: 10px;
+    }
+
+    /* Estilo para ocultar los botones en dispositivos móviles */
+    @media (max-width: 768px) {
+        .slick-prev, .slick-next {
+            display: none !important; /* Oculta los botones de navegación en dispositivos móviles */
+        }
+        .banner-slider{
+            height: 127px;
+        }
+    }
+</style>
