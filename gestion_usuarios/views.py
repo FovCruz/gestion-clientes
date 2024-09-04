@@ -6,6 +6,9 @@ from .models import Usuario,SliderImage,Logo,Producto
 from .forms import UsuarioForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 #--------------  
 class ProductosView(LoginRequiredMixin,TemplateView):
@@ -54,10 +57,19 @@ class UsuarioUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'usuarios/usuario_form.html'
     success_url = reverse_lazy('usuario_list')
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
     model = Usuario
-    template_name = 'usuarios/usuario_confirm_delete.html'
     success_url = reverse_lazy('usuario_list')
+
+    def post(self, request, *args, **kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            # Si es una solicitud AJAX, se maneja de forma especial
+            response = self.delete(request, *args, **kwargs)
+            return JsonResponse({'success': True})
+        else:
+            # Si no es una solicitud AJAX, se maneja normalmente
+            return super().post(request, *args, **kwargs)
 
 class CustomLoginView(LoginView):
     template_name = 'usuarios/login.html'

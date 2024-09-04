@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form style="display:none;">
+    {% csrf_token %}
+</form>
+
 <div class="titulo-pagina">
     <h2>Gestión de Usuarios</h2>
     <p>Panel de revisión de datos generales de la plataforma</p>
@@ -39,58 +43,15 @@
                         {% endif %}
                     </td>
                     <td class="custom-table-cell">
-                        <!-- Botón Editar -->
-                        <a href="/gestion-usuarios/editar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline me-1">
-                            <i class="fa fa-pencil-alt"></i>
-                        </a>
-                        <a href="/gestion-usuarios/editar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none">
-                            <i class="fa fa-pencil-alt"></i>
-                        </a>
-
                         <!-- Botón Eliminar -->
-                        <a href="/gestion-usuarios/eliminar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline me-1">
+                        <button class="btn btn-sm btn-outline-danger custom-btn d-none d-md-inline me-1" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ usuario.pk }}" data-nombre="{{ usuario.nombre }}" data-apellido="{{ usuario.apellido }}">
                             <i class="fa fa-trash"></i>
-                        </a>
-                        <a href="/gestion-usuarios/eliminar/8/" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none">
-                            <i class="fa fa-trash"></i>
-                        </a>
-
-                        <!-- Botón Más -->
-                        <button type="button" class="btn btn-sm btn-outline-secondary custom-btn d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalUsuario8">
-                            <i class="fa fa-info-circle"></i>
                         </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary custom-btn d-inline d-md-none" data-bs-toggle="modal" data-bs-target="#modalUsuario8">
-                            <i class="fa fa-info-circle"></i>
+                        <button class="btn btn-sm btn-outline-danger custom-btn d-inline d-md-none" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ usuario.pk }}" data-nombre="{{ usuario.nombre }}" data-apellido="{{ usuario.apellido }}">
+                            <i class="fa fa-trash"></i>
                         </button>
                     </td>
                 </tr>
-
-                <!-- Modal -->
-                <div class="modal fade" id="modalUsuario{{ usuario.pk }}" tabindex="-1" aria-labelledby="modalLabel{{ usuario.pk }}" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content bg-dark text-light custom-modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel{{ usuario.pk }}">Detalles del Usuario</h5>
-                                <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
-                                <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
-                                <p><strong>Plataforma:</strong> {{ usuario.plataforma }}</p>
-                                <p><strong>Nombre de Usuario en Plataforma:</strong> {{ usuario.nombre_usuario_plataforma }}</p>
-                                <p><strong>Clave de Usuario en Plataforma:</strong> {{ usuario.clave_usuario_plataforma }}</p>
-                                <p><strong>Fecha de Expiración:</strong> {{ usuario.fecha_expiracion }}</p>
-                                <p><strong>Días Restantes:</strong> {{ usuario.dias_restantes }}</p>
-                                <p><strong>Habilitado:</strong> {% if usuario.habilitado %}Sí{% else %}No{% endif %}</p>
-                                <p><strong>Fecha de Inicio:</strong> {{ usuario.fecha_inicio }}</p>
-                                <p><strong>Observaciones:</strong> {{ usuario.observaciones }}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary custom-btn" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {% endfor %}
             </tbody>
         </table>
@@ -99,4 +60,44 @@
         <a href="{% url 'usuario_create' %}" class="btn btn-success custom-btn_crear">Crear Usuario</a>
     </div>
 </div>
+
+<!-- Modal de Confirmación de Eliminación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark">
+                <p>¿Realmente deseas eliminar al usuario <strong id="deleteUserName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="confirmDeleteButton" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Éxito -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">Usuario Eliminado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark">
+                <p>El usuario <strong id="deleteUserName"></strong> ha sido eliminado con éxito.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+
+

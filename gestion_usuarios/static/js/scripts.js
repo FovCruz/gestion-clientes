@@ -63,3 +63,45 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+//CONFIRMACION & EXITO ELIMINAR USUARIO
+  // Pasar los datos del usuario al modal de confirmación de eliminación
+  $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Botón que disparó el modal
+    var userId = button.data('id'); // Extraer el ID del usuario
+    var userName = button.data('nombre') + ' ' + button.data('apellido'); // Extraer el nombre del usuario
+    
+    var modal = $(this);
+    modal.find('#deleteUserName').text(userName); // Mostrar el nombre del usuario en el modal
+    modal.find('#confirmDeleteButton').data('id', userId); // Asignar el ID del usuario al botón de confirmación
+});
+
+// Manejar la confirmación de eliminación
+$('#confirmDeleteButton').on('click', function () {
+    var userId = $(this).data('id'); // Obtener el ID del usuario
+    var url = '/usuarios/eliminar/' + userId + '/'; // Construir la URL de eliminación
+
+    // Obtener el token CSRF del formulario
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val(); 
+
+    // Hacer la petición para eliminar al usuario
+    $.ajax({
+        url: url,
+        method: 'POST',
+        headers: { 'X-CSRFToken': csrfToken }, // Incluye el token CSRF en los headers
+        data: {
+            _method: 'DELETE', // Especificar que se trata de una eliminación
+        },
+        success: function () {
+            $('#deleteModal').modal('hide'); // Cerrar el modal de confirmación
+            $('#successModal').modal('show'); // Mostrar el modal de éxito
+
+            // Opcional: recargar la página después de un breve retardo
+            setTimeout(function(){
+                location.reload();
+            }, 2000);
+        },
+        error: function () {
+            alert('Error al eliminar el usuario. Por favor, inténtalo de nuevo porfis.');
+        }
+    });
+});
