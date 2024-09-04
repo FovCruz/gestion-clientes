@@ -51,12 +51,12 @@ $(document).ready(function () {
 });
 
 // FORMATEAR VALORES
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     function formatPrice(price) {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    document.querySelectorAll('.price').forEach(function(priceElement) {
+    document.querySelectorAll('.price').forEach(function (priceElement) {
         let priceText = priceElement.textContent.trim().replace("CLP ", "").replace(",", "");
         let formattedPrice = formatPrice(parseFloat(priceText));
         priceElement.textContent = `Precio $ ${formattedPrice}`;
@@ -64,12 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //CONFIRMACION & EXITO ELIMINAR USUARIO
-  // Pasar los datos del usuario al modal de confirmación de eliminación
-  $('#deleteModal').on('show.bs.modal', function (event) {
+// Pasar los datos del usuario al modal de confirmación de eliminación
+$('#deleteModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Botón que disparó el modal
     var userId = button.data('id'); // Extraer el ID del usuario
     var userName = button.data('nombre') + ' ' + button.data('apellido'); // Extraer el nombre del usuario
-    
+
     var modal = $(this);
     modal.find('#deleteUserName').text(userName); // Mostrar el nombre del usuario en el modal
     modal.find('#confirmDeleteButton').data('id', userId); // Asignar el ID del usuario al botón de confirmación
@@ -81,7 +81,7 @@ $('#confirmDeleteButton').on('click', function () {
     var url = '/usuarios/eliminar/' + userId + '/'; // Construir la URL de eliminación
 
     // Obtener el token CSRF del formulario
-    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val(); 
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
 
     // Hacer la petición para eliminar al usuario
     $.ajax({
@@ -96,7 +96,7 @@ $('#confirmDeleteButton').on('click', function () {
             $('#successModal').modal('show'); // Mostrar el modal de éxito
 
             // Opcional: recargar la página después de un breve retardo
-            setTimeout(function(){
+            setTimeout(function () {
                 location.reload();
             }, 2000);
         },
@@ -105,3 +105,7 @@ $('#confirmDeleteButton').on('click', function () {
         }
     });
 });
+
+
+
+// Función para cargar los productos con filtros y paginación usando AJAX

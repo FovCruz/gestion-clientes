@@ -1,154 +1,206 @@
 {% load static %}
 {% load humanize %}
 
+<script>
+    // Función para cargar productos
+    function loadProducts(page = 1) {
+        let filter_name = $('#filter-name').val();
+        let min_price = $('#min-price').val();
+        let max_price = $('#max-price').val();
+        let category = $('#filter-category').val();
+        let disponible = $('#disponible').is(':checked') ? '1' : '0';
+        let sort_by = $('#sort-by').val();
+
+        // AJAX request para obtener los productos filtrados
+        $.ajax({
+            url: "{% url 'load_products' %}",  // Generar URL Django
+            data: {
+                'page': page,
+                'filter_name': filter_name,
+                'min_price': min_price,
+                'max_price': max_price,
+                'category': category,
+                'disponible': disponible,
+                'sort_by': sort_by
+            },
+            success: function (data) {
+                $('#products-container').html(data);  // Actualizar productos en el contenedor
+            }
+        });
+    }
+
+    // Detectar cambios en el campo de búsqueda en tiempo real
+    $('#filter-name').on('input', function() {
+        loadProducts(1);  // Cargar productos filtrados
+    });
+
+    // Detectar cambios en otros filtros y cargar los productos
+    $('#min-price, #max-price, #filter-category, #disponible, #sort-by').on('change', function () {
+        loadProducts(1);  // Cargar productos filtrados
+    });
+
+    // Manejar la paginación
+    $(document).on('click', '#next-page, #previous-page', function (e) {
+        e.preventDefault();
+        let page = $(this).data('page');
+        loadProducts(page);
+    });
+
+    // Cargar los productos iniciales
+    $(document).ready(function () {
+        loadProducts(1);
+    });
+</script>
+
+
 <div class="titulo-pagina">
     <h2>Sección de productos</h2>
     <p>Sección para la muestra de productos principales de la tienda</p>
 </div>
 
-<section class="cards">
-    <div class="container">
-        <div class="contenedorCards">
-            {% for producto in productos %}
-            <div class="card">
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                <div class="card-body">
-                    <h3>{{ producto.nombre }}</h3>
-                    <p class="descripcion-corta">{{ producto.descripcionCorta }}</p>
-                    <p class="descripcion-larga">{{ producto.descripcionLarga }}</p>
-                    <p class="price">
-                        {% if producto.precioOferta %}
-                        <span class="precio-original">{{ producto.precio|floatformat:0|intcomma }}</span>
-                        <span class="precio-oferta">{{ producto.precioOferta|floatformat:0|intcomma }}</span>
-                        {% else %}
-                        CLP {{ producto.precio|floatformat:0|intcomma }}
-                        {% endif %}
-                    </p>
-                    {% if producto.existencia %}
-                    <button class="btn">Añadir al carrito</button>
-                    {% else %}
-                    <p class="no-disponible">No disponible</p>
-                    {% endif %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Panel de Filtros -->
+        <aside class="col-lg-3 mb-4">
+            <div class="p-3 shadow-sm">
+                <h5 class="mb-3">Filtros</h5>
+
+                <!-- Filtro por Nombre -->
+                <div class="form-group mb-3">
+                    <label for="filter-name">Nombre del producto</label>
+                    <input type="text" id="filter-name" class="form-control" placeholder="Buscar por nombre">
+                </div>
+
+                <!-- Filtro por Precio -->
+                <div class="form-group mb-3">
+                    <label for="price-range">Rango de precio</label>
+                    <input type="range" class="form-range" min="0" max="1000000" id="price-range">
+                    <div class="d-flex justify-content-between">
+                        <input type="number" class="form-control me-2" id="min-price" placeholder="Mín. CLP">
+                        <input type="number" class="form-control" id="max-price" placeholder="Máx. CLP">
+                    </div>
+                </div>
+
+                <!-- Filtro por Categoría -->
+                <div class="form-group mb-3">
+                    <label for="filter-category">Categoría</label>
+                    <select id="filter-category" class="form-control">
+                        <option value="">Todas las categorías</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <!-- Filtro por Disponibilidad -->
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="disponible">
+                    <label class="form-check-label" for="disponible">Mostrar solo productos disponibles</label>
+                </div>
+
+                <!-- Filtro por Etiquetas -->
+                <div class="form-group mb-3">
+                    <label for="filter-tags">Etiquetas</label>
+                    {% for etiqueta in etiquetas %}
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="tag{{ etiqueta.id }}">
+                        <label class="form-check-label" for="tag{{ etiqueta.id }}">{{ etiqueta.nombre }}</label>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
+        </aside>
+
+        <!-- Sección de productos -->
+        <div class="col-lg-9">
+            <!-- Ordenar productos -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Resultados de búsqueda</h5>
+                <select class="form-select w-auto" id="sort-by">
+                    <option value="asc">Ordenar por precio: Bajo a alto</option>
+                    <option value="desc">Ordenar por precio: Alto a bajo</option>
+                </select>
+            </div>
+
+            <!-- Productos se actualizan por AJAX -->
+            <div id="products-container">
+                {% include 'productos_list.html' %}
+            </div>
+
+            <!-- Paginador -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#" id="previous-page">Anterior</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="next-page">Siguiente</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
-</section>
+</div>
+
+
 
 <style>
-/* Estilos CSS para la sección de productos */
-.cards {
-    padding: 20px;
-    background-color: #f4f4f4;
-}
+    /* Estilos del panel de filtros */
+    aside .card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e1e1;
+    }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
+    aside .form-control,
+    aside .form-check-input {
+        margin-bottom: 15px;
+    }
 
-.contenedorCards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-    width: calc(25% - 20px); /* Ajusta el porcentaje según el número de columnas deseado */
-    box-sizing: border-box;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: scale(1.02); /* Efecto de hover */
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-.card-body h3 {
-    margin-top: 0;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.descripcion-corta {
-    font-size: 14px;
-    color: #666;
-}
-
-.descripcion-larga {
-    font-size: 12px;
-    color: #999;
-    margin: 10px 0;
-    height: auto; /* Ajusta la altura según el contenido */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limita a 2 líneas de texto */
-    -webkit-box-orient: vertical;
-}
-
-.price {
-    font-size: 16px;
-    color: #47d3e6;
-    font-weight: bold;
-
-}
-
-.precio-original {
-    text-decoration: line-through;
-    color: #888;
-    margin-right: 10px;
-}
-
-.precio-oferta {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-.btn {
-    background-color: #47d3e6;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.no-disponible {
-    color: #888;
-    font-size: 14px;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
+    /* Estilos para las cards de productos */
     .card {
-        width: calc(33.333% - 20px); /* 3 columnas en pantallas medianas */
+        transition: all 0.3s ease;
     }
-}
 
-@media (max-width: 900px) {
-    .card {
-        width: calc(50% - 10px); /* 2 columnas en pantallas pequeñas */
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-    .descripcion-corta{
-        display: none;
+
+    .card img {
+        height: 200px;
+        object-fit: cover;
     }
-    h3,.price,.btn{
-        font-size: 13px !important;
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
     }
-}
+
+    .price {
+        font-size: 1rem;
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .precio-original {
+        text-decoration: line-through;
+        color: #888;
+    }
+
+    .precio-oferta {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        aside {
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            height: 150px;
+        }
+    }
 </style>

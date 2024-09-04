@@ -1,0 +1,56 @@
+{% load humanize %}
+
+
+
+<div class="row">
+    {% if productos %}
+    {% for producto in productos %}
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card shadow-sm h-100">
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="card-img-top img-fluid">
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text">{{ producto.descripcionCorta }}</p>
+                <p class="price">
+                    {% if producto.precioOferta %}
+                    <span class="precio-original">CLP {{ producto.precio|floatformat:0|intcomma }}</span>
+                    <span class="precio-oferta">CLP {{ producto.precioOferta|floatformat:0|intcomma }}</span>
+                    {% else %}
+                    CLP {{ producto.precio|floatformat:0|intcomma }}
+                    {% endif %}
+                </p>
+                {% if producto.existencia %}
+                <button class="btn btn-primary w-100">Añadir al carrito</button>
+                {% else %}
+                <p class="text-danger">No disponible</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-warning text-center">
+        No se encontraron productos.
+    </div>
+    {% endif %}
+</div>
+
+<!-- Paginador -->
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if productos.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="#" id="previous-page" data-page="{{ productos.previous_page_number }}">Anterior</a>
+        </li>
+        {% endif %}
+        <li class="page-item">
+            <span class="page-link">{{ productos.number }}</span>
+        </li>
+        {% if productos.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="#" id="next-page" data-page="{{ productos.next_page_number }}">Siguiente</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+

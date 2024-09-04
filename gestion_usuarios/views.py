@@ -10,8 +10,54 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Q
+from django.core.paginator import Paginator
+
 
 #--------------  
+
+def load_products(request):
+    productos = Producto.objects.all()
+
+    # Aplicar filtros según los parámetros recibidos
+    filter_name = request.GET.get('filter_name')
+    if filter_name:
+        productos = productos.filter(nombre__icontains=filter_name)
+    
+    min_price = request.GET.get('min_price')
+    if min_price:
+        productos = productos.filter(precio__gte=min_price)
+    
+    max_price = request.GET.get('max_price')
+    if max_price:
+        productos = productos.filter(precio__lte=max_price)
+    
+    categoria = request.GET.get('category')
+    if categoria:
+        productos = productos.filter(categoria_id=categoria)
+
+    disponible = request.GET.get('disponible')
+    if disponible == '1':
+        productos = productos.filter(existencia=True)
+
+    # Ordenar productos
+    sort_by = request.GET.get('sort_by', 'asc')
+    if sort_by == 'desc':
+        productos = productos.order_by('-precio')
+    else:
+        productos = productos.order_by('precio')
+
+    # Paginación
+    paginator = Paginator(productos, 6)  # 6 productos por página
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+    # Retornar el template que muestra solo los productos filtrados
+    return render(request, 'productos_list.html', {'productos': page_obj})
+
+
+
+
+
 def detalle_producto(request, id):
     producto = get_object_or_404(Producto, id=id)
     return render(request, 'detalle_producto.html', {'producto': producto})

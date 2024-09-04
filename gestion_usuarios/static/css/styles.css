@@ -147,7 +147,7 @@ html {
     border: 1px solid rgb(79, 78, 78);
 }
 .card-busqueda:hover {
-    transform: scale(1.01);
+    transform: scale(1.05);
     border: 1px solid #afaa4c;
 }
 
@@ -318,3 +318,5 @@ html {
 .slick-next {
     right: 1px; /* Posición horizontal desde la derecha */
 }
+
+/* ############################################################ */
