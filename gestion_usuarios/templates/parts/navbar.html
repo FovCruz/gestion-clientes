@@ -47,11 +47,12 @@
             </ul>
             <!-- Barra de búsqueda y botón de Logout -->
             <div class="d-flex align-items-center ms-auto">
-
-                <form class="d-flex" action="{% url 'buscar_productos' %}" method="GET">
-                    <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Search" name="q">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                
+                <form class="d-flex me-3" action="{% url 'buscar_productos' %}" method="GET" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
+                    <button class="btn btn-outline-success btn-buscar" type="submit">Buscar</button>
                 </form>
+                
                 
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}

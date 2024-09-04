@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Usuario,SliderImage,Logo,Producto
@@ -9,8 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.db.models import Q
 
 #--------------  
+def detalle_producto(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    return render(request, 'detalle_producto.html', {'producto': producto})
+
 def buscar_productos(request):
     query = request.GET.get('q', '')
     productos = Producto.objects.all()
@@ -28,7 +33,7 @@ def buscar_productos(request):
         'productos': productos,
         'query': query,
     }
-    return render(request, 'tu_template.html', context)
+    return render(request, 'resultados_busqueda.html', context)
 
 
 class ProductosView(LoginRequiredMixin,TemplateView):

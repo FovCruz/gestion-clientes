@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="titulo-pagina text-center">
+    <h2 class="fs-3">Resultados de búsqueda para "{{ query }}"</h2>
+</div>
+
+<div class="container mt-4">
+    {% if productos %}
+    <div class="mt-3">
+        {% for producto in productos %}
+        <!-- Producto clickable como card completa -->
+        <a href="{% url 'detalle_producto' producto.id %}" class="text-decoration-none">
+            <div class="card futuristic-card mb-2 p-2 rounded shadow-sm card-busqueda">
+                <div class="row align-items-center">
+                    <!-- Información del producto -->
+                    <div class="col-md-8">
+                        <div class="card-header">
+                            <h3 class="mb-3 fs-5">{{ producto.nombre }}</h3><hr>
+                            <p class="mb-1 small"><b>Descripción: </b>{{ producto.descripcionCorta }}</p>
+                            <p class="d-block mb-2 small"><b>Categoría:</b> {{ producto.categoria.nombre }}</p>
+                            <b>Etiquetas:</b>
+                            {% for etiqueta in producto.etiquetas.all %}
+                            <span class="badge bg-secondary me-1 small">{{ etiqueta.nombre }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Imagen del producto -->
+                    <div class="col-md-4 text-center">
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center small">
+        <p>No se encontraron productos que coincidan con la búsqueda.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

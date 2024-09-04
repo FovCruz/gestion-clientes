@@ -5,12 +5,6 @@ from .models import Usuario,SliderImage,Logo,Producto,Categoria, Etiqueta
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'precio', 'existencia')
-    search_fields = ('nombre',)
-    list_filter = ('existencia',)
-
-@admin.register(Producto)
-class ProductoAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'categoria', 'precio', 'precioOferta', 'existencia']
     list_filter = ['categoria', 'etiquetas','nombre']
     search_fields = ['nombre', 'descripcionCorta', 'descripcionLarga', 'codigoProducto']

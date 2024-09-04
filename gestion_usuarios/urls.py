@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from django.views.static import serve
-from .views import HomeView, ProductosView,UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView
+from .views import HomeView, ProductosView,UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView,buscar_productos,detalle_producto
 
 
 urlpatterns = [
@@ -15,6 +15,8 @@ urlpatterns = [
     path('usuarios/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_delete'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('productos/', ProductosView.as_view(), name='productos'),
+    path('producto/<int:id>/', detalle_producto, name='detalle_producto'),
+    path('buscar/', buscar_productos, name='buscar_productos'),
     ]
 
 
