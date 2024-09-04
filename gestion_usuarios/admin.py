@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario,SliderImage,Logo,Producto
+from .models import Usuario,SliderImage,Logo,Producto,Categoria, Etiqueta
 
 #=======================================================
 
@@ -8,6 +8,20 @@ class ProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'precio', 'existencia')
     search_fields = ('nombre',)
     list_filter = ('existencia',)
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'categoria', 'precio', 'precioOferta', 'existencia']
+    list_filter = ['categoria', 'etiquetas','nombre']
+    search_fields = ['nombre', 'descripcionCorta', 'descripcionLarga', 'codigoProducto']
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'descripcion']
+
+@admin.register(Etiqueta)
+class EtiquetaAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
 
 
 #carga de modelo con sus atributos a mostrar en el panel

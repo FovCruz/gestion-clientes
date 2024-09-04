@@ -7,7 +7,15 @@ from django.core.exceptions import ValidationError
 import os
 
 
-#SECCION DE PRODUCTOS
+# Modelo de Categoría
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre
+
+# Modelo de Producto
 class Producto(models.Model):
     nombre = models.CharField(max_length=255)
     imagen = models.ImageField(upload_to='productos/')
@@ -17,9 +25,19 @@ class Producto(models.Model):
     precioOferta = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     existencia = models.BooleanField(default=True)
     codigoProducto = models.CharField(max_length=100, default='')
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True, related_name='productos')
+    etiquetas = models.ManyToManyField('Etiqueta', blank=True)
 
     def __str__(self):
         return self.nombre
+
+# Modelo de Etiqueta/Tag
+class Etiqueta(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+
 
 #CARRUSEL DE LOGOS 
 class Logo(models.Model):

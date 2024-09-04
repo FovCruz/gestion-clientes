@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% for categoria in categorias %}
+    <h3>{{ categoria.nombre }}</h3>
+    <ul>
+        {% for producto in categoria.productos.all %}
+            <li>{{ producto.nombre }} - {{ producto.precio }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+{% endblock %}

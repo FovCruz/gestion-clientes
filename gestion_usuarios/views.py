@@ -11,6 +11,26 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 #--------------  
+def buscar_productos(request):
+    query = request.GET.get('q', '')
+    productos = Producto.objects.all()
+
+    if query:
+        productos = productos.filter(
+            Q(nombre__icontains=query) | 
+            Q(descripcionCorta__icontains=query) | 
+            Q(descripcionLarga__icontains=query) | 
+            Q(categoria__nombre__icontains=query) |
+            Q(etiquetas__nombre__icontains=query)
+        ).distinct()
+
+    context = {
+        'productos': productos,
+        'query': query,
+    }
+    return render(request, 'tu_template.html', context)
+
+
 class ProductosView(LoginRequiredMixin,TemplateView):
     template_name = 'productos.html'
     success_url = reverse_lazy('productos')
