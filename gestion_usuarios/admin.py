@@ -6,7 +6,7 @@ from .models import Usuario,SliderImage,Logo,Producto,Categoria, Etiqueta
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'categoria', 'precio', 'precioOferta', 'existencia']
-    list_filter = ['categoria', 'etiquetas','nombre']
+    list_filter = ['categoria', 'etiquetas']
     search_fields = ['nombre', 'descripcionCorta', 'descripcionLarga', 'codigoProducto']
 
 @admin.register(Categoria)
@@ -29,8 +29,9 @@ class UsuarioAdmin(admin.ModelAdmin):
 
 @admin.register(SliderImage)
 class SliderImageAdmin(admin.ModelAdmin):
-    list_display = ('caption', 'image', 'h2_text', 'h4_text', 'button_text')
-    fields = ('image', 'caption', 'h2_text', 'h4_text', 'paragraph', 'button_text', 'button_url')
+    list_display = ('caption', 'image', 'image_mobile', 'h2_text', 'h4_text', 'button_text')
+    fields = ('image', 'image_mobile', 'caption', 'h2_text', 'h4_text', 'paragraph', 'button_text', 'button_url')
+
 
 #carga de modelo con sus atributos a mostrar en el panel
 class LogoAdmin(admin.ModelAdmin):

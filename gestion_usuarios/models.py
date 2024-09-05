@@ -52,8 +52,9 @@ class Logo(models.Model):
 
 #BANNER SLIDER DEL HOME
 class SliderImage(models.Model):
-    image = models.ImageField(upload_to='slider_images/', verbose_name='Imagen')
-    caption = models.CharField(max_length=255, blank=True, null=True, verbose_name='Subtítulo')
+    image = models.ImageField(upload_to='slider_images/', verbose_name='Imagen versión escritorio')
+    image_mobile = models.ImageField(upload_to='slider_images/mobile/', blank=True, null=True, verbose_name='Imagen versión móvil')  # Nuevo campo
+    caption = models.CharField(max_length=255, blank=True, null=True, verbose_name='Título')
     h2_text = models.CharField(max_length=255, blank=True, null=True, verbose_name='Texto H2')
     h4_text = models.CharField(max_length=255, blank=True, null=True, verbose_name='Texto H4')
     paragraph = models.TextField(blank=True, null=True, verbose_name='Párrafo')
@@ -65,10 +66,12 @@ class SliderImage(models.Model):
             raise ValidationError('Debe haber al menos una imagen para mostrar en el banner.')
 
     def delete(self, *args, **kwargs):
-        # Elimina el archivo de imagen si existe
         if self.image:
             if os.path.isfile(self.image.path):
                 os.remove(self.image.path)
+        if self.image_mobile:
+            if os.path.isfile(self.image_mobile.path):
+                os.remove(self.image_mobile.path)
         super().delete(*args, **kwargs)
 
     class Meta:
@@ -77,6 +80,7 @@ class SliderImage(models.Model):
 
     def __str__(self):
         return self.caption or 'Slider Image'
+
 
 
 #formulario para la creacion de usuarios
