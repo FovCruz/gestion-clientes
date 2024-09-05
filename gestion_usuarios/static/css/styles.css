@@ -260,7 +260,7 @@ html {
     /* Ajusta el ancho del slider al 100% del contenedor */
     position: relative;
     overflow: hidden;
-    height: 625px;
+    height: 626px;
     top: 79px;
 }
 
