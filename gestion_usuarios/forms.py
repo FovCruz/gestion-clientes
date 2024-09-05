@@ -1,6 +1,6 @@
 # gestion-usuarios/forms.py
 from django import forms
-from .models import Usuario
+from .models import Usuario,Categoria
 from django.utils import timezone
 import uuid
 
@@ -62,3 +62,13 @@ class UsuarioForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+class ProductoFiltroForm(forms.Form):
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),
+        required=False,  # Permitir la opción "Todas las categorías"
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    min_price = forms.DecimalField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Mínimo CLP'}))
+    max_price = forms.DecimalField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Máximo CLP'}))
+    disponible = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))

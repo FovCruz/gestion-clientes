@@ -13,7 +13,7 @@
 
         // AJAX request para obtener los productos filtrados
         $.ajax({
-            url: "{% url 'load_products' %}",  // Generar URL Django
+            url: "{% url 'load_products' %}",
             data: {
                 'page': page,
                 'filter_name': filter_name,
@@ -30,7 +30,7 @@
     }
 
     // Detectar cambios en el campo de búsqueda en tiempo real
-    $('#filter-name').on('input', function() {
+    $('#filter-name').on('input', function () {
         loadProducts(1);  // Cargar productos filtrados
     });
 
@@ -52,18 +52,17 @@
     });
 </script>
 
-
 <div class="titulo-pagina">
     <h2>Sección de productos</h2>
     <p>Sección para la muestra de productos principales de la tienda</p>
 </div>
 
-<div class="container-fluid mt-4">
+<div class="container mt-5">
     <div class="row">
         <!-- Panel de Filtros -->
-        <aside class="col-lg-3 mb-4">
-            <div class="p-3 shadow-sm">
-                <h5 class="mb-3">Filtros</h5>
+        <aside class="col-lg-3 col-md-12 col-sm-12 col-12 mb-4">
+            <div class="shadow-md">
+                <h5 class="mb-4">Filtros</h5>
 
                 <!-- Filtro por Nombre -->
                 <div class="form-group mb-3">
@@ -74,7 +73,6 @@
                 <!-- Filtro por Precio -->
                 <div class="form-group mb-3">
                     <label for="price-range">Rango de precio</label>
-                    <input type="range" class="form-range" min="0" max="1000000" id="price-range">
                     <div class="d-flex justify-content-between">
                         <input type="number" class="form-control me-2" id="min-price" placeholder="Mín. CLP">
                         <input type="number" class="form-control" id="max-price" placeholder="Máx. CLP">
@@ -113,33 +111,80 @@
         </aside>
 
         <!-- Sección de productos -->
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-12 mb-4">
             <!-- Ordenar productos -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5>Resultados de búsqueda</h5>
+            <div class="d-flex justify-content-between align-items-center mb-4">
                 <select class="form-select w-auto" id="sort-by">
                     <option value="asc">Ordenar por precio: Bajo a alto</option>
                     <option value="desc">Ordenar por precio: Alto a bajo</option>
                 </select>
+                <h5 class="text-center">Resultados de búsqueda</h5>
             </div>
 
             <!-- Productos se actualizan por AJAX -->
             <div id="products-container">
-                {% include 'productos_list.html' %}
-            </div>
+                <div class="row">
+                    {% if productos %}
+                    {% for producto in productos %}
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"
+                                class="card-img-top img-fluid">
+                            <div class="card-body bg-dark text-white">
+                                <h5 class="card-title">{{ producto.nombre }}</h5>
+                                <hr>
+                                <p class="card-text">{{ producto.descripcionCorta }}</p>
+                                <p class="price">
+                                    {% if producto.precioOferta %}
+                                    <span class="precio-original">CLP {{ producto.precio|floatformat:0|intcomma
+                                        }}</span>
+                                    <span class="precio-oferta">CLP {{ producto.precioOferta|floatformat:0|intcomma
+                                        }}</span>
+                                    {% else %}
+                                    CLP {{ producto.precio|floatformat:0|intcomma }}
+                                    {% endif %}
+                                </p>
+                                {% if producto.existencia %}
+                                <button class="btn btn-primary w-100">Añadir al carrito</button>
+                                {% else %}
+                                <p class="text-danger">No disponible</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="alert alert-warning text-center">
+                        No se encontraron productos.
+                    </div>
+                    {% endif %}
+                </div>
 
-            <!-- Paginador -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#" id="previous-page">Anterior</a></li>
-                    <li class="page-item"><a class="page-link" href="#" id="next-page">Siguiente</a></li>
-                </ul>
-            </nav>
+                <!-- Paginador -->
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {% if productos.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="#" id="previous-page"
+                                data-page="{{ productos.previous_page_number }}">Anterior</a>
+                        </li>
+                        {% endif %}
+                        <li class="page-item">
+                            <span class="page-link bg-dark text-white">Pag-{{ productos.number }}</span>
+                        </li>
+                        {% if productos.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="#" id="next-page"
+                                data-page="{{ productos.next_page_number }}">Siguiente</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
         </div>
+
     </div>
 </div>
-
-
 
 <style>
     /* Estilos del panel de filtros */
@@ -171,6 +216,10 @@
     .card-title {
         font-size: 1.1rem;
         font-weight: 600;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
     .price {
@@ -202,5 +251,25 @@
         .card img {
             height: 150px;
         }
+
+        .card-title {
+            font-size: 0.9rem;
+
+        }
+
+        .card-text {
+            display: none;
+        }
+
+        .w-auto {
+            width: 47% !important;
+            font-size: 11px;
+        }
+
+        h5 {
+            font-size: 1rem;
+            padding-right: 5px;
+        }
+
     }
 </style>

@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Usuario,SliderImage,Logo,Producto
+from .models import Usuario,SliderImage,Logo,Producto,Categoria,Etiqueta
 from .forms import UsuarioForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -47,7 +47,7 @@ def load_products(request):
         productos = productos.order_by('precio')
 
     # Paginación
-    paginator = Paginator(productos, 6)  # 6 productos por página
+    paginator = Paginator(productos, 4)  # 6 productos por página
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
@@ -82,9 +82,16 @@ def buscar_productos(request):
     return render(request, 'resultados_busqueda.html', context)
 
 
-class ProductosView(LoginRequiredMixin,TemplateView):
+class ProductosView(LoginRequiredMixin, TemplateView):
     template_name = 'productos.html'
     success_url = reverse_lazy('productos')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categorias'] = Categoria.objects.all()  # Asegurarse de pasar las categorías
+        context['productos'] = Producto.objects.all()  # Asegurarse de pasar los productos también
+        return context
+
 
 class UserDashView(LoginRequiredMixin,TemplateView):
     template_name = 'usuarios/dashboard.html'
