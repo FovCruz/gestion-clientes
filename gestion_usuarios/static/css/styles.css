@@ -12,6 +12,17 @@
     --background-color: var(--bs-table-bg);
 }
 
+/* ==NAVBAR BUTTONS==================================== */
+.btn-logout {
+    background-color: var(--color-danger) !important;
+    border: 1.5px solid var(--color-primary) !important;
+}
+
+.btn-logout:hover {
+    background-color: darkred;
+    border: 1px solid var(--color-secondary) !important;
+}
+
 /* ==GENERAL==================================== */
 body,
 html {
@@ -22,13 +33,7 @@ html {
     font-family: "Nunito Sans", sans-serif !important;
 }
 
-/* ==HERO SECTION==================================== */
-.hero-section {
-    margin-top: 56px;
-    /* Ajusta el espacio del navbar fijo */
-    height: calc(100vh - 56px);
-    /* Altura de la sección menos el navbar */
-}
+
 
 /* ==PRODUCTS SECTION==================================== */
 .card {
@@ -57,61 +62,6 @@ html {
 /* ==ROUNDED==================================== */
 .rounded {
     border-radius: 15px;
-}
-
-/* ==NAVBAR==================================== */
-
-
-
-.navbar-brand img {
-    height: 100%;
-    width: 100%;
-    max-width: 90px;
-}
-
-.nav-item a {
-    color: var(--color-light);
-}
-
-.nav-item a:hover {
-    color: var(--color-secondary);
-}
-
-
-/* ==NAVBAR BUTTONS==================================== */
-.btn-logout {
-    color: white;
-    background-color: var(--color-danger) !important;
-    border: 1.5px solid var(--color-primary) !important;
-}
-
-.btn-logout:hover {
-    background-color: darkred;
-    color: white;
-    border: 1.5px solid var(--color-secondary) !important;
-}
-
-.btn-buscar {
-    color: var(--color-light);
-    border: 1.5px solid var(--color-light) !important;
-}
-
-.btn-buscar:hover {
-    border: 1px solid var(--color-primary) !important;
-    background-color: black;
-    border: 1.5px solid var(--color-secondary) !important;
-}
-
-.btn-login {
-    color: white;
-    border: 1px solid var(--color-light) !important;
-    background-color: var(--color-success);
-}
-
-.btn-login:hover {
-    border: 1px solid var(--color-primary) !important;
-    background-color: black;
-    border: 1px solid var(--color-light) !important;
 }
 
 /* ==TABLE==================================== */
@@ -259,14 +209,7 @@ html {
 
 
 /* BANNER SLIDER HOME */
-.banner-slider {
-    width: 100%;
-    /* Ajusta el ancho del slider al 100% del contenedor */
-    position: relative;
-    overflow: hidden;
-    height: 628px;
-    top: 79px;
-}
+
 
 .banner-slide {
     height: 100%;
@@ -321,7 +264,7 @@ html {
 /* Estilos para las flechas de navegación */
 .slick-prev,
 .slick-next {
-    background-color: #333333a1;
+    background-color: transparent;
     /* Fondo oscuro */
     color: white;
     /* Color de las flechas */
@@ -347,7 +290,7 @@ html {
 
 .slick-prev:hover,
 .slick-next:hover {
-    background-color: #333333ce;
+    background-color: transparent;
     /* Fondo oscuro */
 
 }
@@ -376,53 +319,134 @@ html {
     }
 }
 
-/* ############################################################ */
+/* NUEVO NAVBAR *//* Tu código CSS existente */
 
-/* NAVBAR MOVIL*/
-.navbar-toggler {
-    border-color: white;
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-.navbar-collapse {
+.promo_banner {
+    background-color: #ffe558d4;
     text-align: center;
+    color: #363636;
+    transition: all .3s linear;
+    font-weight: 400;
+  }
+
+.navbar-top {
+    background-color: #bd6d267d;
+    padding: 0.5rem 1rem;
+    height:70px;
+  }
+  .navbar-bottom {
+    background-color: #ffe7d6e5;
+    padding: 0.5rem 1rem;
+  }
+  .navbar-brand {
+    font-weight: bold;
+    color: #ffffff !important;
+    font-size: 1.5rem;
+  }
+  .navbar-brand img {
+    height: 100%;
+    width: 100%;
+    max-width: 87px;
 }
-@media (max-width: 992px) {
-    .navbar {
-        background-color: #333;
-        padding:0 0.1rem !important;
-        /* Fondo oscuro para una mejor visualización en móviles */
-    }
+  .form-control {
+    border-radius: 20px 0 0 20px;
+  }
+  .btn-search {
+    background-color: #82463c5e;
+    /* border-color: #ffc107; */
+    color: #ffffff;
+    border-radius: 0 20px 20px 0;
+  }
+  .nav-link {
+    color: #ffffff !important;
+  }
 
-    .navbar-nav .nav-link {
-        color: white;
+  .nav-item:hover {
+    background: #dfb794;
+    padding: 0;
+  }
+  .navbar-bottom .nav-link {
+    color: #000 !important;
+  }
+  .btn-outlet,
+  .btn-oferta {
+    transition: background-color 0.3s ease;
+  }
+  .btn-outlet {
+    background-color: #ffc107;
+    color: #000 !important;
+  }
+  .btn-outlet:hover {
+    background-color: #e0a800;
+  }
+  .btn-oferta {
+    background-color: #0d6efd;
+    color: #fff !important;
+  }
+  .btn-oferta:hover {
+    background-color: #0b5ed7;
+  }
+  .tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+  .tabbar-btn {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tabbar-btn i {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  .tabbar-btn.active {
+    color: #0d6efd;
+  }
+  .btn-cart {
+    background-color: #0d6efd;
+    color: white !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  .navbar-bottom .search-form {
+    display: none;
+  }
+  @media (max-width: 991px) {
+    .navbar-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
-
-    .navbar-nav .nav-link:hover {
-        background-color: #444;
-        /* Agrega un efecto hover amigable */
+    .navbar-nav,
+    .navbar-top .search-form,
+    .navbar-bottom .navbar-nav {
+      display: none;
+      height: 80px;
     }
-
-    .navbar-collapse {
-        width: 50%;
-        /* Ajustar el menú para que ocupe todo el ancho */
-        background-color: #333;
-        /* Fondo oscuro para todo el menú desplegable */
-        padding: 1rem;
+    .navbar-bottom .search-form {
+      display: flex;
+      width: 80%;
     }
-
-    .dropdown-menu {
-        background-color: #444;
-        border-radius: 1px;
+    .tabbar {
+      display: flex;
     }
-
-    .dropdown-menu .dropdown-item {
-        color: white;
-    }
-
-    .dropdown-menu .dropdown-item:hover {
-        background-color: #555;
-    }
-}
+  }
+  

@@ -109,3 +109,13 @@ $('#confirmDeleteButton').on('click', function () {
 
 
 // Función para cargar los productos con filtros y paginación usando AJAX
+
+
+//
+$(window).scroll(function() {
+    if ($(window).scrollTop() > 100) {
+        $('.navbar-scrollable').addClass('scrolled');
+    } else {
+        $('.navbar-scrollable').removeClass('scrolled');
+    }
+});

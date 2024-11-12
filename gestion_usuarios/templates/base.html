@@ -1,7 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <!-- Metadatos esenciales -->
@@ -24,9 +23,6 @@
     <!-- Íconos de Bootstrap (opcional) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     
-    <!-- Tailwind CSS (comentado) -->
-    <!-- <link href="{% static 'css/output.css' %}" rel="stylesheet"> -->
-    
     <!-- Fuente de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,29 +38,26 @@
     
     <!-- CSS adicional (personalizado) -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 
-<body class="bg-dark text-white">
+<body>
+
     {% include 'parts/header.html' %}
+    <div class="promo_banner"> <p class="p-2 m-0">Compra antes de las 13:00 hrs de lunes a sábado y recibe el mismo día -⚡ DESPACHO EXPRESS MENOS DE 3 HORAS⚡</p> </div>
 
     <div class="text-capitalize">
-        {% include 'parts/navbar.html' %}
-        {% block content %}{% endblock %}
+        
+    {% include 'parts/navbar.html' %}
+    {% block content %}{% endblock %}
     </div>
 
     {% include 'parts/footer.html' %}
-    
 
-    
-    <!-- Slick Slider JS -->
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    
     <!-- Scripts adicionales -->
-    <script src="{% static 'js/scripts.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.7/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 
 </html>
