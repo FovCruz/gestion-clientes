@@ -1,37 +1,57 @@
 {% load static %}
 
+<!-- Navbar principal superior -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-top">
     <div class="container-fluid">
         <a class="navbar-brand order-0" href="/">
             <img src="{% static 'img/logo_final.png' %}" alt="Logo" class="d-inline-block align-text-top">
         </a>
-        <form class="mx-auto search-form d-lg-flex d-md-none" style="width: 50%;" action="{% url 'buscar_productos' %}" method="GET" role="search">
-            <input class="form-control me-0" type="search" placeholder="Escribe lo que estás buscando..." aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
+
+        <!-- Barra de búsqueda en el centro de la pantalla grande -->
+        <form class="mx-auto search-form d-lg-flex d-md-none" style="width: 50%;" action="{% url 'buscar_productos' %}"
+            method="GET" role="search">
+            <input class="form-control me-0" type="search" placeholder="Escribe lo que estás buscando..."
+                aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
             <button class="btn btn-search" type="submit">Buscar</button>
         </form>
 
-        
-        
-        <ul class="navbar-nav mb-2 mb-lg-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <!-- Opciones para el administrador -->
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'usuario_list' %}">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                {% endif %}
+                <!-- Opciones comunes para usuarios autenticados -->
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Carrito</a>
+                <a class="nav-link" href=" # "><i class="fas fa-headset"></i> Soporte</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-headset"></i> Soporte</a>
+                <a class="nav-link" href=" # "><i class="fas fa-shopping-cart"></i> Carrito</a>
             </li>
             <li class="nav-item">
-                <form method="POST" action="{% url 'logout' %}">
+                <form method="POST" action="{% url 'logout' %}" class="d-inline">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-logout" style="border:none;">Logout</button>
+                    <button type="submit" class="btn btn-link nav-link" style="border: none;">Logout</button>
                 </form>
             </li>
             {% else %}
+            <!-- Opciones para usuarios no autenticados -->
             <li class="nav-item">
-                <button class="btn btn-outline-primary btn-login" type="button"
-                        onclick="window.location.href=' {% url 'login' %} '">
+                <button class="btn btn-outline-primary btn-login me-2" type="button"
+                    onclick="window.location.href='{% url 'login' %}'">
                     Login
                 </button>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-outline-secondary" href="#">Registrarse</a>
             </li>
             {% endif %}
         </ul>
@@ -41,17 +61,22 @@
 <!-- Barra de navegación inferior con categorías -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-bottom">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategories" aria-controls="navbarCategories" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategories"
+            aria-controls="navbarCategories" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="search-form d-lg-none d-md-flex">
+
+        <!-- Barra de búsqueda en dispositivos medianos/pequeños -->
+        <form class="search-form d-lg-none d-md-flex w-100">
             <input class="form-control me-0" type="search" placeholder="Escribe lo que estás buscando...">
             <button class="btn btn-search" type="submit">Buscar</button>
         </form>
+
         <div class="collapse navbar-collapse" id="navbarCategories">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-bars"></i> Todas las categorías
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -94,18 +119,17 @@
         <i class="fas fa-tag"></i>
         Ofertas
     </a>
-    <a href="#" class="tabbar-btn btn-cart">
+    <a href=" # " class="tabbar-btn btn-cart">
         <i class="fas fa-shopping-cart"></i>
     </a>
     <a href="#" class="tabbar-btn">
         <i class="fas fa-percent"></i>
         Outlet
     </a>
-    <a href="#" class="tabbar-btn">
+    <a href="{% url 'login' %}" class="tabbar-btn">
         <i class="fas fa-user"></i>
         Login
     </a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-

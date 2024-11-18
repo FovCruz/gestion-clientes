@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from django.views.static import serve
-from .views import HomeView, ProductosView,UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView,buscar_productos,detalle_producto
+from .views import HomeView, ProductosView,UserDashView, UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView, CustomLoginView,buscar_productos,detalle_producto,search_products
 from . import views
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path('productos/', ProductosView.as_view(), name='productos'),
     path('producto/<int:id>/', detalle_producto, name='detalle_producto'),
     path('buscar/', buscar_productos, name='buscar_productos'),
+    path('search_products/', views.search_products, name='search_products'),   
     path('productos/load/', views.load_products, name='load_products'),
     ]
 

@@ -1,0 +1,36 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Búsqueda en tiempo real en el campo "Nombre del producto" dentro de los filtros
+    $('#filter-name').keyup(function() {
+        var query = $(this).val();
+        $.ajax({
+            url: '{% url 'search_products' %}',
+            data: { 'query': query },
+            success: function(response) {
+                $('#products-container').html(''); // Limpiar los productos anteriores
+                $.each(response, function(index, product) {
+                    // Insertar cada producto encontrado en el contenedor de resultados
+                    $('#products-container').append(`
+                        <div class="col-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <img src="${product.imagen_url}" alt="${product.nombre}" class="card-img-top img-fluid">
+                                <div class="card-body bg-dark text-white">
+                                    <h5 class="card-title">${product.nombre}</h5>
+                                    <hr>
+                                    <p class="card-text">${product.descripcionCorta}</p>
+                                    <p class="price">CLP ${product.precio.toLocaleString()}</p>
+                                    ${product.existencia ? 
+                                        '<button class="btn btn-primary w-100">Añadir al carrito</button>' : 
+                                        '<p class="text-danger">No disponible</p>'
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+        });
+    });
+});
+</script>

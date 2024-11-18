@@ -1,139 +1,6 @@
 {% load static %}
 {% load humanize %}
 
-<script>
-    // Función para cargar productos
-    function loadProducts(page = 1) {
-        let filter_name = $('#filter-name').val();
-        let min_price = $('#min-price').val();
-        let max_price = $('#max-price').val();
-        let category = $('#filter-category').val();
-        let disponible = $('#disponible').is(':checked') ? '1' : '0';
-        let sort_by = $('#sort-by').val();
-
-        // AJAX request para obtener los productos filtrados
-        $.ajax({
-            url: "{% url 'load_products' %}",
-            data: {
-                'page': page,
-                'filter_name': filter_name,
-                'min_price': min_price,
-                'max_price': max_price,
-                'category': category,
-                'disponible': disponible,
-                'sort_by': sort_by
-            },
-            success: function (data) {
-                $('#products-container').html(data);  // Actualizar productos en el contenedor
-            }
-        });
-    }
-
-    // Detectar cambios en el campo de búsqueda en tiempo real
-    $('#filter-name').on('input', function () {
-        loadProducts(1);  // Cargar productos filtrados
-    });
-
-    // Detectar cambios en otros filtros y cargar los productos
-    $('#min-price, #max-price, #filter-category, #disponible, #sort-by').on('change', function () {
-        loadProducts(1);  // Cargar productos filtrados
-    });
-
-    // Manejar la paginación
-    $(document).on('click', '#next-page, #previous-page', function (e) {
-        e.preventDefault();
-        let page = $(this).data('page');
-        loadProducts(page);
-    });
-
-    // Cargar los productos iniciales
-    $(document).ready(function () {
-        loadProducts(1);
-    });
-</script>
-
-<div class="container mt-5">
-    <div class="row">
-      <div class="col-12">
-        <div id="card-carousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                    <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Casa">
-                    <div class="card-body text-center">
-                      <h5 class="card-title">Casa</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                    <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Seguridad">
-                    <div class="card-body text-center">
-                      <h5 class="card-title">Seguridad</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                      <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Seguridad">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Seguridad</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                      <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Seguridad">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Seguridad</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                      <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Seguridad">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Seguridad</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                      <img src="https://www.living.es/blog/wp-content/uploads/2024/01/interfaz-hogar-inteligente-realidad-aumentada-diseno-interiores-objetos-iot-1024x683.jpg" class="card-img-top img-fluid hover-effect" alt="Seguridad">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Seguridad</h5>
-                      </div>
-                    </div>
-                  </div>
-                <div class="col-md-2">
-                  </div>
-                <div class="col-md-2">
-                  </div>
-                <div class="col-md-2">
-                  </div>
-                <div class="col-md-2">
-                  </div>
-              </div>
-            </div>
-            </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#card-carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#card-carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </di
-  v>
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <div class="container mt-5">
     <div class="row">
         <!-- Panel de Filtros -->
@@ -143,7 +10,7 @@
 
                 <!-- Filtro por Nombre -->
                 <div class="form-group mb-3">
-                    <label for="filter-name">Nombre del producto</label>
+                    <label for="search-input">Nombre del producto</label>
                     <input type="text" id="filter-name" class="form-control" placeholder="Buscar por nombre">
                 </div>
 
@@ -166,7 +33,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
 
                 <!-- Filtro por Disponibilidad -->
                 <div class="form-check mb-3">
@@ -206,7 +72,7 @@
                     <div class="col-6 col-md-4 col-lg-3 mb-4">
                         <div class="card shadow-sm h-100">
                             <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"
-                                class="card-img-top img-fluid">
+                                class="card-img-top img-flu id">
                             <div class="card-body bg-dark text-white">
                                 <h5 class="card-title">{{ producto.nombre }}</h5>
                                 <hr>
@@ -259,9 +125,40 @@
                 </nav>
             </div>
         </div>
-
     </div>
 </div>
+
+<script>
+    // Función para cargar productos
+    function loadProducts(page = 1) {
+        let filter_name = $('#filter-name').val().trim(); // Eliminar espacios en blanco
+        // Otros filtros
+        $.ajax({
+            url: "{% url 'load_products' %}",
+            data: {
+                'page': page,
+                'filter_name': filter_name,
+                // Otros filtros
+            },
+            success: function (data) {
+                $('#products-container').html(data);  // Actualizar productos en el contenedor
+            }
+        });
+    }
+
+    // Manejar la paginación
+    $(document).on('click', '#next-page, #previous-page', function (e) {
+        e.preventDefault();
+        let page = $(this).data('page');
+        loadProducts(page);
+    });
+
+    // Cargar los productos iniciales
+    $(document).ready(function () {
+        loadProducts(1);
+    });
+</script>
+
 
 <style>
     /* Estilos del panel de filtros */

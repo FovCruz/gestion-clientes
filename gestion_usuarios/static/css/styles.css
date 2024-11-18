@@ -16,6 +16,7 @@
 .btn-logout {
     background-color: var(--color-danger) !important;
     border: 1.5px solid var(--color-primary) !important;
+    color: white;
 }
 
 .btn-logout:hover {
@@ -449,4 +450,13 @@ html {
       display: flex;
     }
   }
-  
+
+  .gradient {
+    background: linear-gradient(180deg,#0000,#fff);
+    top: 584px;
+    height: 30%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+  }

@@ -19,7 +19,7 @@ def load_products(request):
     productos = Producto.objects.all()
 
     # Aplicar filtros según los parámetros recibidos
-    filter_name = request.GET.get('filter_name')
+    filter_name = request.GET.get('filter_name', '').strip()  # Eliminar espacios
     if filter_name:
         productos = productos.filter(nombre__icontains=filter_name)
     
@@ -52,10 +52,17 @@ def load_products(request):
     page_obj = paginator.get_page(page_number)
 
     # Retornar el template que muestra solo los productos filtrados
-    return render(request, 'productos_list.html', {'productos': page_obj})
+    return render(request, 'productos_filtros.html', {'productos': productos})
 
 
-
+def search_products(request):
+    query = request.GET.get('query')
+    if query:
+        products = Producto.objects.filter(nombre__icontains=query)
+        results = [{'id': product.id, 'nombre': product.nombre} for product in products]
+        return JsonResponse(results, safe=False)
+    else:
+        return JsonResponse([], safe=False)
 
 
 def detalle_producto(request, id):
