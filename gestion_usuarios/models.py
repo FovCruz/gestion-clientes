@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
+from django.utils.timezone import now
 from datetime import timedelta
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -83,7 +84,6 @@ class SliderImage(models.Model):
 
 
 
-#formulario para la creacion de usuarios
 class Usuario(AbstractUser):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
@@ -98,7 +98,7 @@ class Usuario(AbstractUser):
     habilitado = models.BooleanField(default=True)
     nombre_usuario_plataforma = models.CharField(max_length=50, blank=True)
     clave_usuario_plataforma = models.CharField(max_length=50, blank=True)
-    # Modificación para evitar conflictos de nombres
+
     groups = models.ManyToManyField(
         Group,
         related_name='usuario_custom_user_set',
@@ -114,8 +114,21 @@ class Usuario(AbstractUser):
         verbose_name='user permissions',
     )
 
-    def agregar_meses(self, meses):
+    def agregar_meses(self, meses, observacion=""):
+        # Si no hay fecha de expiración, usa la fecha actual
         if not self.fecha_expiracion:
-            self.fecha_expiracion = timezone.now().date()
+            self.fecha_expiracion = now().date()
+        
+        # Actualizar la fecha de expiración
         self.fecha_expiracion += timedelta(days=meses * 30)
+
+        # Agregar observación (si se provee)
+        if observacion:
+            self.observaciones += f"\n{now().strftime('%Y-%m-%d')}: {observacion}"
+        
         self.save()
+
+    def calcular_dias_restantes(self):
+        if self.fecha_expiracion:
+            return (self.fecha_expiracion - now().date()).days
+        return 0

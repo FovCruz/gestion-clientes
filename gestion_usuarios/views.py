@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.utils import timezone
+from django.utils.timezone import now
+from datetime import timedelta
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Usuario,SliderImage,Logo,Producto,Categoria,Etiqueta
 from .forms import UsuarioForm
@@ -11,7 +13,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.core.paginator import Paginator
-
 
 #--------------  
 
@@ -159,3 +160,24 @@ class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
 class CustomLoginView(LoginView):
     template_name = 'usuarios/login.html'
     redirect_authenticated_user = True
+
+
+
+
+def registrar_pago(request, user_id):
+    try:
+        usuario = Usuario.objects.get(id=user_id)
+        # Supongamos que recibes los meses desde el frontend
+        meses = int(request.POST.get('meses', 0))
+        observacion = request.POST.get('observacion', '')
+
+        usuario.agregar_meses(meses, observacion)
+        return JsonResponse({
+            'status': 'success',
+            'mensaje': f'Pago registrado. Nueva fecha de expiración: {usuario.fecha_expiracion}',
+            'dias_restantes': usuario.calcular_dias_restantes(),
+        })
+    except Usuario.DoesNotExist:
+        return JsonResponse({'status': 'error', 'mensaje': 'Usuario no encontrado'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'mensaje': str(e)})

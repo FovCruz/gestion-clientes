@@ -119,3 +119,46 @@ $(window).scroll(function() {
         $('.navbar-scrollable').removeClass('scrolled');
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentModal = document.getElementById('paymentModal');
+    paymentModal.addEventListener('show.bs.modal', (event) => {
+        const button = event.relatedTarget;
+        const userId = button.getAttribute('data-id');
+        const userName = button.getAttribute('data-nombre');
+
+        // Rellena el campo oculto con el ID del usuario
+        const userIdInput = document.getElementById('usuarioIdInput');
+        userIdInput.value = userId;
+
+        // Opcional: Actualiza el título o contenido del modal
+        const modalTitle = document.getElementById('paymentModalLabel');
+        modalTitle.textContent = `Registrar Pago para ${userName}`;
+    });
+});
+
+document.getElementById('pagoForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    fetch('/ruta/para/registrar/pago/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Pago registrado exitosamente');
+            window.location.reload(); // Recargar la página para reflejar los cambios
+        } else {
+            alert('Error al registrar el pago');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
